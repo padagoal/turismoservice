@@ -1,0 +1,383 @@
+{% extends 'travelix/main_detalle.html' %}
+{% load static %}
+{% block titulo %} {{ titulo }}{% endblock titulo %}
+{% block cabecera_extra_css_detalle %}
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/offers_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/offers_responsive.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/elements_styles.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/elements_responsive.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/single_listing_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/single_listing_responsive.css' %}">
+{% endblock cabecera_extra_css_detalle %}
+
+{% block cuerpo_main_detalle_home %}
+    <div class="home">
+            <div class="home_background parallax-window" data-parallax="scroll" style="background-image:url({% static 'travelix/images/about_background.jpg'%})"></div>
+            <div class="home_content">
+                <div class="home_title">our offers</div>
+            </div>
+    </div>
+
+{% endblock cuerpo_main_detalle_home %}
+
+
+<!-- Search - Main Detalle -->
+{% block seccion_search %}
+    <div class="search">
+
+
+		<!-- Search Contents -->
+
+		<div class="container fill_height">
+			<div class="row fill_height">
+				<div class="col fill_height">
+
+					<!-- Search Tabs -->
+
+					<div class="search_tabs_container">
+						<div class="search_tabs d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+							<div class="search_tab {% if activar == 'hotel' %} active {% endif %} d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
+                                <img src="{% static 'travelix/images/suitcase.png'%}" alt=""><span>hotels</span></div>
+							<div class="search_tab {% if activar == 'viaje' %} active {% endif %} d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
+                                <img src="{% static 'travelix/images/bus.png'%}" alt="">Viajes</div>
+							<!--<div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
+                                <img src="{% static 'travelix/images/departure.png'%}" alt="">flights</div> -->
+							<div class="search_tab {% if activar == 'lugar' %} active {% endif %} d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
+                                <img src="{% static 'travelix/images/island.png'%}" alt="">Lugares</div>
+							<div class="search_tab {% if activar == 'destino' %} active {% endif %} d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
+                                <img src="{% static  'travelix/images/cruise.png'%}" alt="">Destinos</div>
+							<div class="search_tab {% if activar == 'actividad' %} active {% endif %} d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
+                                <img src="{% static 'travelix/images/diving.png'%}" alt="">Actividades</div>
+						</div>
+					</div>
+
+					<!-- Search Panel -->
+                    <!-- Hoteles -->
+					<div class="search_panel {% if activar == 'hotel' %} active {% endif %}">
+						<form action="#" id="search_form_1"
+                              class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center
+                              align-items-start justify-content-lg-between justify-content-start">
+
+							<div class="search_item">
+								<div>destination</div>
+								<input type="text" class="destination search_input" required="required">
+							</div>
+
+                            <div class="search_item">
+								<div>check in</div>
+								<input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
+							</div>
+
+                            <div class="search_item">
+								<div>check out</div>
+								<input type="text" class="check_out search_input" placeholder="YYYY-MM-DD">
+							</div>
+
+                            <div class="search_item">
+								<div>adults</div>
+								<select name="adults" id="adults_1" class="dropdown_item_select search_input">
+									<option>01</option>
+									<option>02</option>
+									<option>03</option>
+								</select>
+							</div>
+
+							<div class="search_item">
+								<div>children</div>
+								<select name="children" id="children_1" class="dropdown_item_select search_input">
+									<option>0</option>
+									<option>02</option>
+									<option>03</option>
+								</select>
+							</div>
+							<button class="button search_button">search<span></span><span></span><span></span></button>
+						</form>
+					</div>
+
+					<!-- Search Panel -->
+                    <!-- Viajes -->
+					<div class="search_panel {% if activar == 'viaje' %} active {% endif %}">
+						<div id="search_form_3"
+                             class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center
+                             align-items-start justify-content-lg-between justify-content-start">
+							<div class="search_item">
+								<div>Ciudad</div>
+								<select name="ciudad" id="ciudad_2" class="form-control ">
+								</select>
+							</div>
+
+							<div class="search_item">
+								<div>Tipo de Viajes</div>
+								<select name="viaje" id="viajes_2" class="form-control ">
+								</select>
+							</div>
+							<button class="button search_button" onclick="buscarporViaje()">Buscar<span></span><span></span><span></span></button>
+						</div>
+					</div>
+
+					<!-- Search Panel -->
+                    <!-- Lugares -->
+					<div class="search_panel {% if activar == 'lugar' %} active {% endif %}">
+						<div id="search_form_4" class="search_panel_content d-flex flex-lg-row flex-column
+						align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+							<div class="search_item">
+								<div>Ciudad</div>
+								<select name="ciudad" id="ciudad_4" class="form-control ">
+								</select>
+							</div>
+
+							<div class="search_item">
+								<div>Tipo de Lugar</div>
+								<select name="lugar" id="lugares_4" class="form-control ">
+								</select>
+							</div>
+							<button class="button search_button" onclick="buscarporLugar()">Buscar<span></span><span></span><span></span></button>
+						</div>
+					</div>
+
+					<!-- Search Panel -->
+                    <!-- Destinos -->
+					<div class="search_panel {% if activar == 'destino' %} active {% endif %}">
+						<div  id="search_form_5" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+							<!--<div class="search_item">
+								<div>Ciudad</div>
+								<select name="ciudad" id="ciudad_5" class="form-control ">
+								</select>
+							</div>-->
+
+							<div class="search_item" style="width: 80%">
+								<div>Destinos</div>
+								<select name="destinos" id="destinos_5" class="form-control ">
+								</select>
+							</div>
+							<button class="button search_button" onclick="buscarpordestino()">Buscar<span></span><span></span><span></span></button>
+						</div>
+					</div>
+
+					<!-- Search Panel Actividades-->
+
+					<div class="search_panel {% if activar == 'actividad' %} active {% endif %}">
+						<div id="search_form_6"
+                              class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center
+                              align-items-start justify-content-lg-between justify-content-start">
+							<div class="search_item">
+								<div>Ciudad</div>
+								<select name="ciudad" id="ciudad_6" class="form-control ">
+								</select>
+							</div>
+
+							<div class="search_item">
+								<div>Actividades</div>
+								<select name="actividad" id="actividad_6" class="form-control ">
+								</select>
+							</div>
+							<button class="button search_button" onclick="buscarporActividad()">Buscar<span></span><span></span><span></span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock seccion_search %}
+
+{% block secciones_internas %}
+    <div id="resultado_busqueda">
+        <div class="offers">
+
+        <div class="container">
+			<div class="row">
+				<div  class="col-lg-1 temp_col"></div>
+				<div class="col-lg-11">
+                    <div id="result" class="elements_title" style="padding-top: 1em">Atractivos en {{ nombre_ciudad }}</div>
+				</div>
+
+				<div class="col-lg-12">
+					<!-- Lugar Grilla -->
+
+					<div class="offers_grid">
+
+                        {% if lista_data %}
+                            {% for dato in lista_data %}
+                                <div class="offers_item rating_4">
+                                    <div class="row">
+                                        <div class="col-lg-1 temp_col"></div>
+                                        <div class="col-lg-3 col-1680-4">
+                                            <div class="offers_image_container">
+                                                <!-- Image by https://unsplash.com/@kensuarez -->
+                                                <div class="offers_image_background" style="background-image:url({{ '/media/' }}{{ dato.foto_lugar }})"></div>
+                                                <div class="offer_name"><a href="#result" onclick="showPlace({{ dato.pk }})">{{ dato.name_place }}</a></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <div class="offers_content">
+                                                <div class="offers_price">
+                                                    <a href="#result" class="offers_price" onclick="showPlace({{ dato.pk }})">
+                                                        {{ dato.name_place }}
+                                                    </a>
+                                                </div>
+
+                                                <p class="offers_text">
+                                                    {{ dato.description_place }}
+                                                </p>
+                                                <div class="offers_icons">
+                                                    <ul class="offers_icons_list">
+                                                        <li class="offers_icons_item"><img src="{% static 'travelix/images/post.png' %}" alt=""></li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="offer_reviews">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+						        </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock secciones_internas %}
+
+{% block extra_detalle_js %}
+
+<!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyD7xt9P8jVg7JrzhPBIdrHHRThGcsvMoCY"></script>-->
+<script src="{% static 'travelix/js/single_listing_custom.js' %}"></script>
+
+    <script type="text/javascript">
+        function showPlace(lugar){
+
+            $.ajax({
+               type: 'GET',
+               url: '{% url "singleplaceinfo" %}',
+               data: {
+                 'csrfmiddlewaretoken': '{{ csrf_token }}',
+                   'lugar': lugar,
+                   'isAjax':'S'
+
+               },
+               success: function(data) {
+                   $('#resultado_busqueda').html(data);
+                   $('#resultado_busqueda').focus();
+
+               },
+               error: function(data) {
+                  console.log(data);
+               }
+             });
+
+
+        }
+
+
+        function buscarporActividad(){
+            var ciudad = $('#ciudad_6').val();
+            var actividad = $('#actividad_6').val();
+
+            $.ajax({
+               type: 'GET',
+               url: '{% url "buscarActividadVista" %}',
+               data: {
+                 'csrfmiddlewaretoken': '{{ csrf_token }}',
+                   'ciudad': ciudad,
+                   'actividad': actividad,
+                   'isAjax':'S'
+
+               },
+               success: function(data) {
+                   $('#resultado_busqueda').html(data);
+                   $('#resultado_busqueda').focus();
+
+               },
+               error: function(data) {
+                  console.log(data);
+               }
+             });
+
+        }
+
+        function buscarporViaje(){
+            var ciudad = $('#ciudad_3').val();
+            var viaje = $('#viajes_3').val();
+
+            $.ajax({
+               type: 'GET',
+               url: '{% url "buscarViajeVista" %}',
+               data: {
+                 'csrfmiddlewaretoken': '{{ csrf_token }}',
+                   'ciudad': ciudad,
+                   'viaje': viaje,
+                   'isAjax':'S'
+
+               },
+               success: function(data) {
+                   $('#resultado_busqueda').html(data);
+                   $('#resultado_busqueda').focus();
+
+               },
+               error: function(data) {
+                  console.log(data);
+               }
+             });
+
+        }
+
+        function buscarpordestino() {
+            var ciudad = $('#destinos_5').val();
+            var destino = $('#destinos_5').val();
+
+            $.ajax({
+               type: 'GET',
+               url: '{% url "buscarDestinoVista" %}',
+               data: {
+                 'csrfmiddlewaretoken': '{{ csrf_token }}',
+                   'ciudad': ciudad,
+                   'destino': destino,
+                   'isAjax':'S'
+
+               },
+               success: function(data) {
+                   $('#resultado_busqueda').html(data);
+                   $('#resultado_busqueda').focus();
+
+               },
+               error: function(data) {
+                  console.log(data);
+               }
+             });
+        }
+
+        function buscarporLugar(){
+            var ciudad = $('#ciudad_4').val();
+            var lugar = $('#lugares_4').val();
+
+            $.ajax({
+               type: 'GET',
+               url: '{% url "buscarLugarVista" %}',
+               data: {
+                 'csrfmiddlewaretoken': '{{ csrf_token }}',
+                   'ciudad': ciudad,
+                   'lugar': lugar,
+                   'isAjax':'S'
+
+               },
+               success: function(data) {
+                   $('#resultado_busqueda').html(data);
+                   $('#resultado_busqueda').focus();
+
+               },
+               error: function(data) {
+                  console.log(data);
+               }
+             });
+        }
+    </script>
+
+{% endblock extra_detalle_js %}
+
+

@@ -1,0 +1,164 @@
+
+{% load static %}
+
+
+
+
+
+<div class="super_container">
+
+
+	<!-- Offers -->
+
+	<div class="listing">
+
+		<!-- Search -->
+
+
+
+		<!-- Single Listing -->
+
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="single_listing">
+						
+						<!-- Hotel Info -->
+
+						<div class="hotel_info">
+
+							<!-- Title -->
+							<div class="hotel_title_container d-flex flex-lg-row flex-column">
+								<div class="hotel_title_content">
+									<h1 class="hotel_title">{{ lugar.name_place }}</h1>
+									<!--<div class="rating_r rating_r_4 hotel_rating">
+										<i></i>
+										<i></i>
+										<i></i>
+										<i></i>
+										<i></i>
+									</div>-->
+                                    {% if lugar.direccionlugar %}
+                                        <div class="hotel_location">{{ lugar.direccionlugar }} </div>
+                                    {% endif %}
+								</div>
+								<div class="hotel_title_button ml-lg-auto text-lg-right">
+									<!--<div class="button book_button trans_200"><a href="#">book<span></span><span></span><span></span></a></div>-->
+									<div class="hotel_map_link_container">
+										<div class="hotel_map_link"><a href="#resultmap" class="hotel_map_link">Ver ubicacion en el Mapa</a> </div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Listing Image -->
+
+							<div class="hotel_image">
+								<img src="{{ '/media/' }}{{ lugar.foto_lugar }}" alt="" width="50%">
+								<!--<div class="hotel_review_container d-flex flex-column align-items-center justify-content-center">
+									<div class="hotel_review">
+										<div class="hotel_review_content">
+											<div class="hotel_review_title">very good</div>
+											<div class="hotel_review_subtitle">100 reviews</div>
+										</div>
+										<div class="hotel_review_rating text-center">8.1</div>
+									</div>
+								</div>-->
+							</div>
+
+
+							<!-- Place Info Text -->
+
+							<div class="hotel_info_text">
+								<p> {{ lugar.description_place }}</p>
+							</div>
+
+							<!-- Hotel Info Tags -->
+
+							<div class="hotel_info_tags">
+								<ul class="hotel_icons_list">
+									<li class="hotel_icons_item"><img src="{% static 'travelix/images/post.png' %}" alt=""></li>
+									<li class="hotel_icons_item"><img src="{% static 'travelix/images/compass.png' %}" alt=""></li>
+									<li class="hotel_icons_item"><img src="{% static 'travelix/images/bicycle.png' %}" alt=""></li>
+									<li class="hotel_icons_item"><img src="{% static 'travelix/images/sailboat.png' %}" alt=""></li>
+								</ul>
+							</div>
+
+						</div>
+
+                        <div class="more_info">
+                            <div class="more_info_title">Informacion Adicional</div>
+
+                            <ul class="more_info_item_list">
+
+                                {% if lugar.telefonolugar %}
+                                    <li class="more_info_item"><i class="fa fa-phone-square" aria-hidden="true"></i> {{ lugar.telefonolugar }}</li>
+                                {% endif %}
+                                {% if lugar.whatsapp_place %}
+                                     <li class="more_info_item"><i class="fa fa-whatsapp"></i> {{ lugar.whatsapp_place }}</li>
+                                {% endif %}
+                                {% if lugar.website_lugar %}
+                                    <li class="more_info_item"><i class="fa fa-desktop" aria-hidden="true"></i> <a href="{{ lugar.website_lugar }}"> Web {{ lugar.name_place }}</a></li>
+                                {% endif %}
+                                {% if lugar.facebook_profile %}
+                                    <li class="more_info_item"><i class="fa fa-facebook-official"></i> <a href="{{ lugar.facebook_profile }}">{{ lugar.name_place }}</a></li>
+                                {% endif %}
+                                {% if lugar.instagram_profile %}
+                                    <li class="more_info_item"><i class="fa fa-instagram"></i> <a href="{{ lugar.instagram_profile }}">{{ lugar.name_place }}</a></li>
+                                {% endif %}
+                                {% if lugar.twitter_profile %}
+                                    <li class="more_info_item"><i class="fa fa-twitter-square"></i> <a href="{{ lugar.twitter_profile }}">{{ lugar.name_place }}</a></li>
+                                {% endif %}
+                            </ul>
+
+                        </div>
+
+						<!-- Location on Map -->
+
+						<div class="location_on_map" id="resultmap">
+							<div class="location_on_map_title">Ubicacion en el Mapa</div>
+
+							<!-- Google Map -->
+		
+							<div class="travelix_map">
+								<div id="google_map" class="google_map">
+									<div class="map_container">
+										<div id="map"></div>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>		
+	</div>
+
+<script>
+// Initialize and add the map
+    function initMap() {
+      // The location of Asuncion -25.244695951306028, 'lng': -57.48046875
+
+        var place_location = {lat: {{ lugar.position_lugar.latitude }}, lng: {{lugar.position_lugar.longitude}} };
+
+
+
+      var map = new google.maps.Map(
+          document.getElementById('map'), {zoom: 15, center: place_location});
+
+      var marker = new google.maps.Marker({position: place_location, map: map});
+    }
+</script>
+
+    <script defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7xt9P8jVg7JrzhPBIdrHHRThGcsvMoCY&callback=initMap">
+    </script>
+
+
+
+</div>
+
+
+
+

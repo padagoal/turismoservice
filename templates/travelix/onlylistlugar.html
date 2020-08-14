@@ -1,0 +1,69 @@
+{% load static %}
+
+
+<!-- Search - Main Detalle -->
+
+	<div class="offers">
+
+        <div class="container">
+			<div class="row">
+				<div  class="col-lg-1 temp_col"></div>
+				<div class="col-lg-11">
+                    <div id="result" class="elements_title" style="padding-top: 1em">Atractivos en {{ nombre_ciudad }}</div>
+				</div>
+
+				<div class="col-lg-12">
+					<!-- Lugar Grilla -->
+
+					<div class="offers_grid">
+
+                        {% if lista_data %}
+                            {% for dato in lista_data %}
+                                <div class="offers_item rating_4">
+                                    <div class="row">
+                                        <div class="col-lg-1 temp_col"></div>
+                                        <div class="col-lg-3 col-1680-4">
+                                            <div class="offers_image_container">
+                                                <!-- Image by https://unsplash.com/@kensuarez -->
+                                                <div class="offers_image_background" style="background-image:url({{ '/media/' }}{{ dato.foto_lugar }})"></div>
+                                                <div class="offer_name"><a href="#result" onclick="showPlace({{ dato.pk }})">{{ dato.name_place }}</a></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <div class="offers_content">
+                                                <div class="offers_price">
+                                                    <a href="#result" class="offers_price" onclick="showPlace({{ dato.pk }})">
+                                                        {{ dato.name_place }}
+                                                    </a>
+                                                </div>
+
+                                                <p class="offers_text">
+                                                    {{ dato.description_place }}
+                                                </p>
+                                                <div class="offers_icons">
+                                                    <ul class="offers_icons_list">
+                                                        <li class="offers_icons_item"><img src="{% static 'travelix/images/post.png' %}" alt=""></li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="offer_reviews">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+						        </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+

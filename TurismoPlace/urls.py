@@ -1,0 +1,28 @@
+from django.urls import path
+from TurismoPlace.views import lugartipofiltro,destinotipofiltro,viajetipofiltro,actividadtipofiltro,\
+    ciudadfiltro,buscarActividad, buscarActividadVista,singleplaceinfo,buscarViajeVista,buscarDestinoVista,buscarLugarVista
+urlpatterns = [
+
+    #API
+    #path('admin/', admin.site.urls),
+    path('lugartipofiltro/',lugartipofiltro,name ='lugartipofiltro'),
+    path('destinotipofiltro/',destinotipofiltro,name='destinotipofiltro'),
+    path('viajetipofiltro/',viajetipofiltro,name='viajetipofiltro'),
+    path('actividadtipofiltro/',actividadtipofiltro,name='actividadtipofiltro'),
+    path('ciudadfiltro/',ciudadfiltro,name='ciudadfiltro'),
+
+    path('buscarActividad/',buscarActividad,name= 'buscarActividad'),
+
+
+
+    #Vistas
+    path('buscarActividadVista/',buscarActividadVista,name= 'buscarActividadVista'),
+    path('buscarViajeVista/',buscarViajeVista,name= 'buscarViajeVista'),
+    path('buscarDestinoVista/',buscarDestinoVista,name='buscarDestinoVista'),
+    path('buscarLugarVista/',buscarLugarVista,name='buscarLugarVista'),
+
+    path('singleplaceinfo/',singleplaceinfo,name= 'singleplaceinfo'),
+
+]
+
+#?ciudad=4&actividad=8#
