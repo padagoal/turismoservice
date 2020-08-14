@@ -121,11 +121,11 @@
 			<div class="menu_close_container"><div class="menu_close"></div></div>
 			<div class="logo menu_logo"><a href="#"><img src="{% static 'travelix/images/logo.png'%}" alt=""></a></div>
 			<ul>
-				<li class="menu_item"><a href="#">home</a></li>
+				<li class="menu_item"><a href="{% url 'home' %}">home</a></li>
 				<li class="menu_item"><a href="about.html">about222 us</a></li>
 				<li class="menu_item"><a href="offers.html">offers</a></li>
 				<li class="menu_item"><a href="blog.html">news</a></li>
-				<li class="menu_item"><a href="contact.html">contacto</a></li>
+				<li class="menu_item"><a href="{% url 'contact' %}">contacto</a></li>
 			</ul>
 		</div>
 	</div>
