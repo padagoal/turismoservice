@@ -206,15 +206,30 @@
                                             <div class="offers_image_container">
                                                 <!-- Image by https://unsplash.com/@kensuarez -->
                                                 <div class="offers_image_background" style="background-image:url({{ '/media/' }}{{ dato.foto_lugar }})"></div>
-                                                <div class="offer_name"><a href="#result" onclick="showPlace({{ dato.pk }})">{{ dato.name_place }}</a></div>
+
+
+
+                                                {% if dato.is_hotel %}
+                                                    <div class="offer_name"><a href="#result" onclick="showHotelPlace({{ dato.pk }})">{{ dato.name_place }}</a></div>
+                                                {% else %}
+                                                    <div class="offer_name"><a href="#result" onclick="showPlace({{ dato.pk }})">{{ dato.name_place }}</a></div>
+                                                {% endif %}
+
                                             </div>
                                         </div>
                                         <div class="col-lg-8">
                                             <div class="offers_content">
                                                 <div class="offers_price">
-                                                    <a href="#result" class="offers_price" onclick="showPlace({{ dato.pk }})">
+                                                    {% if dato.is_hotel %}
+                                                        <a href="#result" class="offers_price" onclick="showHotelPlace({{ dato.pk }})">
                                                         {{ dato.name_place }}
                                                     </a>
+                                                    {% else %}
+                                                        <a href="#result" class="offers_price" onclick="showPlace({{ dato.pk }})">
+                                                        {{ dato.name_place }}
+                                                    </a>
+                                                    {% endif %}
+
                                                 </div>
 
                                                 <p class="offers_text">
@@ -273,6 +288,32 @@
 
 
         }
+
+        function showHotelPlace(lugar){
+
+            $.ajax({
+               type: 'GET',
+               url: '{% url "singleplacehotelinfo" %}',
+               data: {
+                 'csrfmiddlewaretoken': '{{ csrf_token }}',
+                   'lugar': lugar,
+                   'isAjax':'S'
+
+               },
+               success: function(data) {
+                   $('#resultado_busqueda').html(data);
+                   $('#resultado_busqueda').focus();
+
+               },
+               error: function(data) {
+                  console.log(data);
+               }
+             });
+
+
+        }
+
+
 
 
         function buscarporActividad(){

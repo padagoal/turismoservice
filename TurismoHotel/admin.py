@@ -7,17 +7,17 @@ admin.site.register(ServiceHotel)
 admin.site.register(ServiceRoom)
 
 
-admin.site.register(Hotel)
-#admin.site.register(Rooms)
 
-class PhotosRoomInline(admin.TabularInline):
-    model = PhotosRoom
+class PhotosHotelInline(admin.TabularInline):
+    model = PhotosHotel
 
-admin.site.register(PhotosRoom)
 
-class RoomAdmin(admin.ModelAdmin):
+
+class HotelAdmin(admin.ModelAdmin):
     inlines = [
-        PhotosRoomInline,
+        PhotosHotelInline,
     ]
 
-admin.site.register(Rooms,RoomAdmin)
+
+admin.site.register(Rooms)
+admin.site.register(Hotel,HotelAdmin)

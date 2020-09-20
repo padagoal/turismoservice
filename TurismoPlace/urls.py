@@ -1,6 +1,5 @@
 from django.urls import path
-from TurismoPlace.views import lugartipofiltro,destinotipofiltro,viajetipofiltro,actividadtipofiltro,\
-    ciudadfiltro,buscarActividad, buscarActividadVista,singleplaceinfo,buscarViajeVista,buscarDestinoVista,buscarLugarVista
+from TurismoPlace.views import *
 urlpatterns = [
 
     #API
@@ -22,6 +21,7 @@ urlpatterns = [
     path('buscarLugarVista/',buscarLugarVista,name='buscarLugarVista'),
 
     path('singleplaceinfo/',singleplaceinfo,name= 'singleplaceinfo'),
+    path('singleplacehotelinfo/',singleplacehotelinfo,name= 'singleplacehotelinfo'),
 
 ]
 

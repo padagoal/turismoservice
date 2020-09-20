@@ -68,6 +68,7 @@ class Rooms(models.Model):
     room_avaib = models.IntegerField(verbose_name='Cantidad de Habitaciones disponibles',default=1)
     room_avaib_use = models.IntegerField(verbose_name='Cantidad de Habitaciones Usadas', default=0)
     room_services = models.ManyToManyField(ServiceRoom,related_name='service_name_room')
+    photo_room = models.ImageField(upload_to='room/photos/', null=True,blank=True)
     created_at = models.DateTimeField(verbose_name='created_at', auto_now_add=True, null=True)
     created_by = models.CharField(verbose_name='created_by', default='', max_length=200, null=True,blank=True)
     updated_at = models.DateTimeField(verbose_name='updated_at', auto_now_add=True, null=True)
@@ -84,9 +85,9 @@ class Rooms(models.Model):
         return "\n".join([p.service_name for p in self.room_services.all()])
 
 
-class PhotosRoom(models.Model):
-    room_hotel_ph = models.ForeignKey(Rooms,on_delete=models.DO_NOTHING)
-    photo_room = models.ImageField(upload_to='room/photos/',null=True)
+class PhotosHotel(models.Model):
+    hotel_ph = models.ForeignKey(Hotel,on_delete=models.DO_NOTHING)
+    photo_hotel = models.ImageField(upload_to='hotel/photos/',null=True)
 
     created_at = models.DateTimeField(verbose_name='created_at', auto_now_add=True, null=True)
     created_by = models.CharField(verbose_name='created_by', default='', max_length=200, null=True,blank=True)
@@ -94,8 +95,8 @@ class PhotosRoom(models.Model):
     updated_by = models.CharField(verbose_name='updated_by', default='', max_length=200, null=True,blank=True)
 
     class Meta:
-        verbose_name = 'Foto de Habitacion'
-        verbose_name_plural = 'Fotos de Habitaciones'
+        verbose_name = 'Foto del Hotel'
+        verbose_name_plural = 'Fotos del Hotel'
 
     def __str__(self):
-        return self.room_hotel_ph.room_hotel.hotel_lugar.name_place + ' ' + self.room_hotel_ph.room_name + ' ' + str(self.photo_room)
+        return self.hotel_ph.hotel_lugar.name_place + ' ' + str(self.photo_hotel)

@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.shortcuts import render
 from .serializers import LugarTipoSerial,DestinoTipoSerial,ActividadTipoSerial,ViajeTipoSerial,CiudadFiltroSerial,LugarSerial
 from TurismoPlace.models import LugarTipo,DestinoTipo,ActividadesTipo,ViajeTipo,Ciudad,Lugar
+from TurismoHotel.models import Hotel,Rooms,PhotosHotel
 from django.http import HttpResponse, JsonResponse
 # Create your views here.
 
@@ -151,6 +152,21 @@ def singleplaceinfo(request):
             'lugar':lugar
         })
 
+
+def singleplacehotelinfo(request):
+    lugar_a_buscar = request.GET.get('lugar')
+    if lugar_a_buscar is not None and lugar_a_buscar is not '':
+        lugar = Lugar.objects.get(pk=lugar_a_buscar)
+        hotel = Hotel.objects.get(hotel_lugar=lugar)
+        rooms = Rooms.objects.filter(room_hotel=hotel)
+        photo_hotel = PhotosHotel.objects.filter(hotel_ph=hotel)
+        return render(request, 'travelix/single_listing_hotel.html', {
+            'lugar':lugar,
+            'hotel':hotel,
+            'rooms':rooms,
+            'photo_hotel': photo_hotel,
+
+        })
 
 
 
