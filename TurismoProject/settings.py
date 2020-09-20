@@ -23,9 +23,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'p9=3jt6h@tw#7)bmf0!7-5ca#4cc@s(gcuvb^a(ws@smbunj%_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.getcwd() == '/var/www/html/turismoservice':
+    DEBUG = False
+    ALLOWED_HOSTS = ['turismoapp.creatu.co']
+else:
+    DEBUG = True
+    ALLOWED_HOSTS = []
 
-ALLOWED_HOSTS = []
+
 
 
 # Application definition
