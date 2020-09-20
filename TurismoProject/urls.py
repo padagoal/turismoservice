@@ -39,6 +39,7 @@ urlpatterns = [
 
 
     path('',include('TurismoPlace.urls')),
+    path('',include('TurismoHotel.urls')),
     #path('',include('TurismoRestApi.urls'))
 ]
 

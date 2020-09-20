@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'TurismoApp.apps.TurismoappConfig',
     'TurismoPlace.apps.TurismoplaceConfig',
     'TurismoRestApi.apps.TurismorestapiConfig',
+    'TurismoHotel.apps.TurismohotelConfig',
     'geoposition',
     'rest_framework',
 ]
