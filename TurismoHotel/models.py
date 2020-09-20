@@ -40,6 +40,7 @@ class Hotel(models.Model):
     hotel_lugar = models.ForeignKey(Lugar,limit_choices_to={'is_hotel':True},on_delete=models.DO_NOTHING)
     hotel_stars = models.IntegerField(default=1)
     hotel_services = models.ManyToManyField(ServiceHotel,related_name='service_name_hotel')
+    hotel_score = models.FloatField(default=9.0,verbose_name='Hotel Score')
 
     created_at = models.DateTimeField(verbose_name='created_at', auto_now_add=True, null=True)
     created_by = models.CharField(verbose_name='created_by', default='', max_length=200, null=True,blank=True)

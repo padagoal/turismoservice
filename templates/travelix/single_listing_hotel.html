@@ -52,15 +52,15 @@
 
 							<div class="hotel_image">
 								<img src="{{ '/media/' }}{{ lugar.foto_lugar }}" alt="">
-								<!--<div class="hotel_review_container d-flex flex-column align-items-center justify-content-center">
+								<div class="hotel_review_container d-flex flex-column align-items-center justify-content-center">
 									<div class="hotel_review">
 										<div class="hotel_review_content">
 											<div class="hotel_review_title">very good</div>
 											<div class="hotel_review_subtitle">100 reviews</div>
 										</div>
-										<div class="hotel_review_rating text-center">8.1</div>
+										<div class="hotel_review_rating text-center">{{ hotel.hotel_score }}</div>
 									</div>
-								</div>-->
+								</div>
 							</div>
 
 							<!-- Hotel Gallery -->
@@ -68,13 +68,14 @@
 							<div class="hotel_gallery">
 								<div class="hotel_slider_container">
 									<div class="owl-carousel owl-theme hotel_slider">
+                                    <!-- Hotel Gallery Slider Item -->
                                         {% for ph in photo_hotel %}
-										<!-- Hotel Gallery Slider Item -->
-										<div class="owl-item">
-											<a class="colorbox cboxElement" href="{{ '/media/' }}{{ ph.photo_hotel }}">
-												<img src="{{ '/media/' }}{{ ph.photo_hotel }}">
-											</a>
-										</div>
+
+                                            <div class="owl-item">
+                                                <a class="colorbox cboxElement" href="{{ '/media/' }}{{ ph.photo_hotel }}">
+                                                    <img src="{{ '/media/' }}{{ ph.photo_hotel }}">
+                                                </a>
+                                            </div>
                                         {% endfor %}
 
 									</div>
