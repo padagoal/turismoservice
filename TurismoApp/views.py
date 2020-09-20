@@ -12,6 +12,10 @@ def index(request):
     return render(request,'travelix/main_detalle.html')
 
 
+def history(request):
+    return render(request,'travelix/history.html',{'titulo': 'Historia'})
+
+
 def contact(request):
     return render(request,'travelix/contact.html',{'titulo':'Contacto'})
 

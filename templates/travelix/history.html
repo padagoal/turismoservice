@@ -1,0 +1,126 @@
+{% extends 'travelix/main.html' %}
+{% load static %}
+
+{% block titulo %}
+    {{ titulo }}
+{% endblock titulo %}
+{% block cabecera_extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/about_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/about_responsive.css' %}">
+{% endblock cabecera_extra_css %}
+
+
+
+
+{% block cuerpo_main %}
+
+	<!-- Home -->
+
+	<div class="home">
+		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="{% static 'historia/historia_3.jpeg' %}"></div>
+		<div class="home_content">
+			<div class="home_title" style="top: 100px" >Historia del Paraguay</div>
+		</div>
+	</div>
+
+	<!-- Intro -->
+
+	<div class="intro">
+		<div class="container">
+			<div class="row">
+
+                <div class="col-lg-7">
+					<div class="intro_image"><img src="{% static 'historia/historia_4.jpg' %}" alt="" width="75%"></div>
+				</div>
+
+                <div class="col-lg-5">
+					<div class="intro_content">
+						<!--<div class="intro_title">we have the best tours</div>-->
+						<p class="intro_text" style="margin-top: 1px;">
+                            Paraguay fue descubierto en el año 1524 por el adelantado español,
+                            Alejo García, formando la “Provincia Gigante de las Indias”.
+                            Entre el descubrimiento y subsiguientes operaciones,
+                            los nombres más conocidos en aquella época fueron Sebastián Gaboto,
+                            Pedro de Mendoza, Alvar Núñez Cabeza de Vaca, Juan de Salazar de Espinoza,
+                            Juan de Ayolas, Domingo Martínez de Irala y otros que tuvieron gravitante actuación
+                            en la fundación de fuertes y pueblos e iniciaron, en alianza con las comunidades indígenas,
+                            un proceso de conformación social marcado por la fuerza de los conquistadores y
+                            la acción evangelizadora de la Iglesia Católica. Los primeros misioneros fueron
+                            de la orden de San Francisco de Asís, luego vinieron los sacerdotes de la Compañía de Jesús,
+                            los Jesuitas, ambos evangelizadores dejaron un legado cultural de gran importancia
+                            para el Paraguay.
+                        </p>
+						<!--<div class="button intro_button"><div class="button_bcg"></div><a href="#">explore now<span></span><span></span><span></span></a></div>-->
+					</div>
+				</div>
+			</div>
+
+            <div class="row">
+				<div class="col-lg-6">
+					<div class="intro_content">
+						<!--<div class="intro_title">we have the best tours</div>-->
+						<p class="intro_text">El dominio español llegó a su fin en el año 1811 con la revolución
+                            del 14 de mayo, cuando un grupo de patriotas decidió acuñar un país independiente y soberano.
+
+
+                            Aún se conservan los edificios construidos en la segunda mitad del Siglo XIX.
+
+
+                            La nueva República tomó estatus constitucional con el Gobierno de Don Carlos Antonio López
+                            en 1844 y experimentó un desarrollo económico, técnico y social sorprendente.
+                            En esa época se establecieron servicios como el ferrocarril, la navegación mercante,
+                            el telégrafo. Se construyeron grandes y bellos edificios, se instaló un astillero
+                            y la primera planta siderúrgica en América.
+                        </p>
+						<!--<div class="button intro_button"><div class="button_bcg"></div><a href="#">explore now<span></span><span></span><span></span></a></div>-->
+					</div>
+				</div>
+                <div class="col-lg-1"></div>
+                <div class="col-lg-5" style="margin-top: 20px;">
+					<div class="intro_image"><img src="{% static 'historia/historia_1.jpg' %}" alt="" width="75%"></div>
+				</div>
+			</div>
+
+            <div class="row">
+
+                <div class="col-lg-7">
+					<div class="intro_image"><img src="{% static 'historia/historia_3.jpeg' %}" alt="" width="75%"></div>
+				</div>
+
+                <div class="col-lg-5">
+					<div class="intro_content">
+						<!--<div class="intro_title">we have the best tours</div>-->
+						<p class="intro_text" style="margin-top: 10px;">
+                            En la actualidad, el Paraguay es un Estado Social de Derecho con régimen democrático,
+                            cuyo gobierno es ejercido por tres poderes: Ejecutivo, Legislativo y Judicial.
+                            El territorio está dividido en 17 departamentos regidos por un gobernador,
+                            una junta departamental y cada distrito tiene un gobierno local encabezado
+                            por un Intendente municipal.
+
+                            La multiculturalidad hace del Paraguay,
+                            un país peculiar y diferente, en continua evolución.
+                            Con poblaciones autóctonas de cinco familias lingüísticas, prevaleciendo el guaraní,
+                            con la presencia de inmigrantes provenientes de varios países del mundo, aportaron a
+                            la primera mezcla española-guaraní, una riqueza extraordinaria en las manifestaciones
+                            culturales.
+                        </p>
+						<!--<div class="button intro_button"><div class="button_bcg"></div><a href="#">explore now<span></span><span></span><span></span></a></div>-->
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+	</div>
+
+
+
+
+{% block extra_js_end_body %}
+    <script src="{% static 'travelix/plugins/parallax-js-master/parallax.min.js'%}"></script>
+    <script src="{% static 'travelix/js/about_custom.js' %}"></script>
+{% endblock extra_js_end_body %}
+
+
+{% endblock cuerpo_main %}
