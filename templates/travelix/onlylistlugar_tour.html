@@ -1,0 +1,82 @@
+{% load static %}
+
+<!-- Search - Main Detalle -->
+
+	<div class="offers">
+
+        <div class="container">
+			<div class="row">
+				<div  class="col-lg-1 temp_col"></div>
+				<div class="col-lg-11">
+
+				</div>
+
+				<div class="col-lg-12">
+					<!-- Lugar Grilla -->
+
+					<div class="offers_grid">
+
+                        {% if lista_data %}
+                            {% for dato in lista_data %}
+
+                                <div class="offers_item rating_4">
+                                    <div class="row">
+                                        <div class="col-lg-1 temp_col"></div>
+                                        <div class="col-lg-3 col-1680-4">
+                                            <div class="offers_image_container">
+                                                <!-- Image by https://unsplash.com/@kensuarez -->
+                                                <div class="offers_image_background" style="background-image:url({{ '/media/' }}{{ dato.foto_lugar }})"></div>
+                                                {% if dato.is_hotel %}
+                                                    <div class="offer_name"><a href="#result" onclick="showHotelPlace({{ dato.pk }})">{{ dato.name_place }}</a></div>
+                                                {% else %}
+                                                    <div class="offer_name"><a href="#result" onclick="showHotelPlace({{ dato.pk }})">{{ dato.name_place }}</a></div>
+                                                {% endif %}
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <div class="offers_content">
+                                                <div class="offers_price">
+                                                    {% if dato.is_hotel %}
+                                                        <a href="#result" class="offers_price" onclick="showHotelPlace({{ dato.pk }})">
+                                                        {{ dato.name_place }}
+                                                    </a>
+                                                    {% else %}
+                                                        <a href="#result" class="offers_price" onclick="showPlace({{ dato.pk }})">
+                                                        {{ dato.name_place }}
+                                                    </a>
+                                                    {% endif %}
+
+                                                </div>
+
+                                                <p class="offers_text">
+                                                    {{ dato.description_place }}
+                                                </p>
+                                                <div class="offers_icons">
+                                                    <ul class="offers_icons_list">
+                                                        <li class="offers_icons_item"><img src="{% static 'travelix/images/post.png' %}" alt=""></li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="offer_reviews">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+						        </div>
+                                <br>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+

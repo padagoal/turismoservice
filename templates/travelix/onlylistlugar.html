@@ -29,7 +29,7 @@
                                                 {% if dato.is_hotel %}
                                                     <div class="offer_name"><a href="#result" onclick="showHotelPlace({{ dato.pk }})">{{ dato.name_place }}</a></div>
                                                 {% else %}
-                                                    <div class="offer_name"><a href="#result" onclick="showHotelPlace({{ dato.pk }})">{{ dato.name_place }}</a></div>
+                                                    <div class="offer_name"><a href="#result" onclick="showPlace({{ dato.pk }})">{{ dato.name_place }}</a></div>
                                                 {% endif %}
 
                                             </div>

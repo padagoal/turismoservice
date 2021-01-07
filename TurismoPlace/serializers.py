@@ -114,6 +114,12 @@ class LugarSerial(serializers.ModelSerializer):
         fields = ('name_place','description_place','foto_lugar','get_tipo_lugar','tipo_viaje_lugar',)
 
 
+class LugarSerialAll(serializers.ModelSerializer):
+    class Meta:
+        model = Lugar
+        fields = '__all__'
+
+
 class CiudadFiltroSerial(serializers.Serializer):
     datos = serializers.SerializerMethodField('get_id_ciudad')
 

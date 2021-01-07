@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.shortcuts import render
-from .serializers import LugarTipoSerial,DestinoTipoSerial,ActividadTipoSerial,ViajeTipoSerial,CiudadFiltroSerial,LugarSerial
+from .serializers import LugarTipoSerial,DestinoTipoSerial,ActividadTipoSerial,ViajeTipoSerial,CiudadFiltroSerial,LugarSerial,LugarSerialAll
 from TurismoPlace.models import LugarTipo,DestinoTipo,ActividadesTipo,ViajeTipo,Ciudad,Lugar
 from TurismoHotel.models import Hotel,Rooms,PhotosHotel
 from django.http import HttpResponse, JsonResponse
@@ -198,3 +198,9 @@ def ciudadfiltro(request):
     lista = Ciudad.objects.all()
     serializer = CiudadFiltroSerial(lista,many=False)
     return JsonResponse(serializer.data,safe=False, status=200)
+
+
+def lugarAll(request):
+    lista = Lugar.objects.all()
+    serializer = LugarSerialAll(lista,many=True)
+    return JsonResponse(serializer.data, safe=False, status=200)

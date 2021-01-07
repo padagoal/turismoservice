@@ -8,3 +8,5 @@ turismoproject_env
 ./static
 /log
 db.sqlite3
+requirements.txt
+turismo39_env

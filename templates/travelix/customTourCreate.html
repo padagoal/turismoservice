@@ -1,0 +1,254 @@
+{% extends 'travelix/main.html' %}
+{% load static %}
+
+{% block titulo %}
+    {{ titulo }}
+{% endblock titulo %}
+{% block cabecera_extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/about_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/about_responsive.css' %}">
+{% endblock cabecera_extra_css %}
+
+
+
+
+{% block cuerpo_main %}
+
+    <!-- Home -->
+
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll"
+             data-image-src="{% static 'img/customtour.jpg' %}"></div>
+        <div class="home_content">
+            <div class="home_title" style="top: 100px">Crea tu propio viaje ❤️😊</div>
+        </div>
+    </div>
+
+    <!-- Intro -->
+
+    <div class="intro">
+        <div class="container-fluid">
+
+            <div class="row">
+                <!-- FILTERS COLUMNS -->
+                <div class="col-lg-2">
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div class="card-header bg-info" id="headingOne">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left text-white" type="button"
+                                            data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                        Actividades
+                                    </button>
+                                </h2>
+                            </div>
+
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                 data-parent="#accordionExample">
+                                <div class="card-body wide">
+                                    <ul class="list-group list-group-flush">
+                                        {% if listactividades %}
+                                            {% for dato in listactividades %}
+                                                <li class="list-group-item">
+                                                    <label>
+                                                        <input type="checkbox" name="listactivities"
+                                                               id="{{ dato.pk }}"/>
+                                                        {{ dato.activities_type }}
+                                                    </label>
+                                                </li>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header bg-info" id="headingTwo">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left collapsed text-white" type="button"
+                                            data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                            aria-controls="collapseTwo">
+                                        Lugares
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                 data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        {% if listlugartipo %}
+                                            {% for dato in listlugartipo %}
+                                                <li class="list-group-item">
+                                                    <label>
+                                                        <input type="checkbox" name="listplaces" id="{{ dato.pk }}"/>
+                                                        {{ dato.place_type }}
+                                                    </label>
+                                                </li>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div><!-- LUGARES -->
+                        <div class="card">
+                            <div class="card-header bg-info" id="headingThree">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left collapsed text-white" type="button"
+                                            data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                            aria-controls="collapseThree">
+                                        Viajes
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                 data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        {% if listaviaje %}
+                                            {% for dato in listaviaje %}
+                                                <li class="list-group-item">
+                                                    <label>
+                                                        <input type="checkbox" name="listtravels" id="{{ dato.pk }}"/>
+                                                        {{ dato.travel_type }}
+                                                    </label>
+                                                </li>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div><!-- VIAJES -->
+                    </div>
+
+
+                </div>
+                <!-- FILTERS COLUMNS -->
+                <div class="col-lg-7">
+                    <!-- Buscador -->
+                    <div class="search">
+                        <div class="container fill_height">
+                            <div class="row fill_height">
+                                <div class="col-lg-12">
+                                    <div class="search_panel active">
+                                        <div id="search_form_2"
+                                             class="search_panel_content
+                                            d-flex flex-lg-row flex-column align-items-lg-center align-items-start
+                                            justify-content-lg-between justify-content-start">
+                                            <div class="search_item" style="width: 60%">
+                                                <div>Ciudad</div>
+                                                <select name="ciudad" id="ciudad_2" class="form-control ">
+                                                </select>
+                                            </div>
+
+                                            <button class="button search_button" onclick="filtrarResultados();">
+                                                Buscar<span></span><span></span><span></span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Buscador -->
+                    </div>
+                    <!-- Resultados -->
+                    <div id="resultado_busqueda">
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    {% block extra_js_end_body %}
+        <script src="{% static 'travelix/plugins/parallax-js-master/parallax.min.js' %}"></script>
+        <script src="{% static 'travelix/js/about_custom.js' %}"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/debug.addIndicators.min.js"></script>
+
+
+        <script>
+            $('#ciudad_2').select2({
+                width: '100%',
+                placeholder: 'Ciudades',
+                ajax: {
+                    url: '{% url 'ciudadfiltro' %}',
+                    dataType: 'json',
+                    processResults: function (data) {
+                        var lista_datos = $.map(data.datos, function (obj) {
+                            obj.text = obj.text || obj.nombre_ciudad;
+                            return obj;
+                        });
+                        return {
+                            results: data.datos
+                        };
+
+                    }
+                }
+            });
+        </script>
+
+
+        <script>
+
+            function filtrarResultados() {
+
+                var listaActividadesSeleccionadas = document.querySelectorAll('input[name=listactivities]:checked');
+                var listaLugaresSeleccionadas = document.querySelectorAll('input[name=listplaces]:checked');
+                var listaViajesSeleccionados = document.querySelectorAll('input[name=listtravels]:checked');
+
+                var listaActividadesID = [];
+                var listaLugaresID = [];
+                var listaViajesID = [];
+
+                for (let dataID of listaActividadesSeleccionadas) {
+                    listaActividadesID.push(dataID.id);
+                }
+                for (let dataID of listaLugaresSeleccionadas) {
+                    listaLugaresID.push(dataID.id);
+                }
+                for (let dataID of listaViajesSeleccionados) {
+                    listaViajesID.push(dataID.id);
+                }
+
+                console.log(listaActividadesID);
+                console.log(listaLugaresID);
+                console.log(listaViajesID);
+
+                var lugar = 1;
+
+                $.ajax({
+                    type: 'GET',
+                    url: '{% url "listPlacesForTour" %}',
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        'citysearch': lugar,
+                        'listacti': listaActividadesID.join(","),
+                        'listlugar': listaLugaresID.join(","),
+                        'listviaje': listaViajesID.join(","),
+                        'isAjax': 'S'
+
+                    },
+                    success: function (data) {
+                       $('#resultado_busqueda').html(data);
+                       $('#resultado_busqueda').focus();
+                        console.log(data);
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+
+
+            }
+
+
+        </script>
+
+    {% endblock extra_js_end_body %}
+
+
+{% endblock cuerpo_main %}

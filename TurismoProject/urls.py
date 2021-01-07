@@ -43,7 +43,7 @@ urlpatterns = [
     #path('',include('TurismoRestApi.urls'))
 ]
 
-admin.site.site_title = ("TurismoApp Administradpr")
+admin.site.site_title = ("TurismoApp Administrador")
 admin.site.site_header = ("TurismoApp Administrador")
 
 urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

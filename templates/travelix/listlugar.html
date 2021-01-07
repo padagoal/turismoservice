@@ -314,6 +314,25 @@
         }
 
 
+        function showTourInfo(lugar){
+            $.ajax({
+               type: 'GET',
+               url: '{% url "singleplacetourinfo" %}',
+               data: {
+                 'csrfmiddlewaretoken': '{{ csrf_token }}',
+                   'lugar': lugar,
+                   'isAjax':'S'
+               },
+               success: function(data) {
+                   $('#resultado_busqueda').html(data);
+                   $('#resultado_busqueda').focus();
+
+               },
+               error: function(data) {
+                  console.log(data);
+               }
+             });
+        }
 
 
         function buscarporActividad(){
@@ -420,5 +439,8 @@
     </script>
 
 {% endblock extra_detalle_js %}
+
+{% block extra_extra_js %}
+{% endblock extra_extra_js %}
 
 
