@@ -25,7 +25,7 @@ SECRET_KEY = 'p9=3jt6h@tw#7)bmf0!7-5ca#4cc@s(gcuvb^a(ws@smbunj%_'
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.getcwd() == '/var/www/html/turismoservice':
     DEBUG = False
-    ALLOWED_HOSTS = ['turismoapp.creatu.co']
+    ALLOWED_HOSTS = ['turismoapp.creatu.co','comunidadturismo.com','www.comunidadturismo.com']
 else:
     DEBUG = True
     ALLOWED_HOSTS = []
