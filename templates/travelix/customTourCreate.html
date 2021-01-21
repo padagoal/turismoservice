@@ -123,7 +123,7 @@
 
 
                 </div>
-                <!-- FILTERS COLUMNS -->
+                <!-- Fin  FILTERS COLUMNS -->
                 <div class="col-lg-7">
                     <!-- Buscador -->
                     <div class="search">
@@ -154,6 +154,35 @@
                     <div id="resultado_busqueda">
 
 
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card border-info text-dark bg-light mb-3" style="max-width: 18rem;">
+                        <div class="card-header">
+                            Nombre de tu Tour
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Ponele un nombre unico a tu Tour</h5>
+
+                            <div class="search_item" style="width: 100%">
+                                <input type="text" class="destination search_input" required="required" id="nameTour"
+                                       placeholder="Nombre del tour">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card border-info text-dark bg-light mb-3" style="max-width: 18rem;">
+                        <div class="card-header">
+                            Lugares Agregados
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Aqui se muestran los lugares que agregaste a tu tour</h5>
+
+                            <button onclick="crearTourUser()" class="btn btn-success">Guardar Tour</button>
+                            <br>
+                            <div id="lugaresAgregados">
+                                <!--Lista de los lugares que agrega el usuario -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -214,11 +243,7 @@
                     listaViajesID.push(dataID.id);
                 }
 
-                console.log(listaActividadesID);
-                console.log(listaLugaresID);
-                console.log(listaViajesID);
-
-                var lugar = 1;
+                var lugar = $('#ciudad_2').val();
 
                 $.ajax({
                     type: 'GET',
@@ -233,9 +258,8 @@
 
                     },
                     success: function (data) {
-                       $('#resultado_busqueda').html(data);
-                       $('#resultado_busqueda').focus();
-                        console.log(data);
+                        $('#resultado_busqueda').html(data);
+                        $('#resultado_busqueda').focus();
                     },
                     error: function (data) {
                         console.log(data);
@@ -246,6 +270,112 @@
             }
 
 
+        </script>
+
+
+
+        <script>
+            var listPlacesAddedForTour = [];
+
+            function agregarLugarList(dato) {
+                console.log(dato);
+                var data = dato.split("_");
+                var index = -1;
+                index = listPlacesAddedForTour.indexOf(data[0])
+                if (!(index > -1)) {
+                    listPlacesAddedForTour.push(data[0]);
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "drawPlacesForTour" %}',
+                        data: {
+                            'csrfmiddlewaretoken': '{{ csrf_token }}',
+                            'places': listPlacesAddedForTour.join(","),
+                            'isAjax': 'S'
+
+                        },
+                        success: function (data) {
+                            $('#lugaresAgregados').html(data);
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        }
+                    });
+                }
+
+
+            }
+
+            function sacarLugarList(dato) {
+                console.log(dato);
+                var data = dato.split("_");
+                var index = -1;
+                index = listPlacesAddedForTour.indexOf(data[0])
+                if ((index > -1)) {
+                    listPlacesAddedForTour.splice(index,1);
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "drawPlacesForTour" %}',
+                        data: {
+                            'csrfmiddlewaretoken': '{{ csrf_token }}',
+                            'places': listPlacesAddedForTour.join(","),
+                            'isAjax': 'S'
+
+                        },
+                        success: function (data) {
+                            $('#lugaresAgregados').html(data);
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        }
+                    });
+                }
+
+
+            }
+
+            function crearTourUser() {
+                var placesOk=false;
+                var nameOk=false;
+                if (listPlacesAddedForTour == null || listPlacesAddedForTour.length === 0) {
+                    alert("Debes agregar Lugares a tu lista, para crear el Tour");
+                    placesOk=false;
+                }else{
+                    placesOk = true;
+                }
+                var nombreTour = $('#nameTour').val();
+                if(nombreTour == null || nombreTour ===''){
+                    alert("Debes agregar un nombre a tu Tour");
+                    nameOk=false;
+                }else{
+                    nameOk=true;
+                }
+                if(placesOk && nameOk)
+                {
+                    $.ajax({
+                    type: 'POST',
+                    url: '{% url "saveTourFromUser" %}',
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        'tourName': nombreTour,
+                        'listPlaces': listPlacesAddedForTour.join(","),
+                        'isAjax': 'S'
+
+                    },
+                    success: function (data) {
+                        window.location.href = {% url 'showUserTour' %};
+                        //$('#resultado_busqueda').html(data);
+                        //$('#resultado_busqueda').focus();
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+
+
+                }
+
+            }
         </script>
 
     {% endblock extra_js_end_body %}

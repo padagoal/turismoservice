@@ -1,0 +1,12 @@
+<br>
+<ul class="list-group">
+    {% for dato in lugares %}
+        <li class="list-group-item">
+            {{ dato.name_place }} - {{ dato.ciudad_lugar.nombre_ciudad }}
+
+            <button class="btn btn-danger"
+                    title="{{ dato.pk }}_{{ dato.name_place }}_{{ dato.ciudad_lugar.nombre_ciudad }}"
+                    onclick="sacarLugarList(this.title)" value="X">Eliminar</button>
+        </li>
+    {% endfor %}
+</ul>

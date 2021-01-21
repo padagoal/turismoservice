@@ -24,6 +24,8 @@ urlpatterns = [
 
     path('singleplaceinfo/',singleplaceinfo,name= 'singleplaceinfo'),
     path('singleplacehotelinfo/',singleplacehotelinfo,name= 'singleplacehotelinfo'),
+    path('singleplacetourinfo/<int:pk>',tour_info,name='singleplacetourinfo'),
+    path('deletetour/<int:pk>',delete_tour,name='deletetour'),
     path('singleplacetourinfo/',tour_info,name='singleplacetourinfo'),
 
 
@@ -32,7 +34,15 @@ urlpatterns = [
     #CustomTour
     path('customtour/',customtour,name='customtour'),
 
-    path('listPlacesForTour/',listPlacesForTour,name='listPlacesForTour')
+    path('showUserTour/',list_tour_user,name='showUserTour'),
+
+    path('listPlacesForTour/',listPlacesForTour,name='listPlacesForTour'),
+
+    path('drawPlacesForTour/',draw_list_places_user_choice,name='drawPlacesForTour'),
+
+    path('saveTourFromUser',saveTourFromUser,name='saveTourFromUser')
+
+
 
 
 ]

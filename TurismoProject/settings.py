@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'TurismoTour.apps.TurismotourConfig',
     'geoposition',
     'rest_framework',
+    'sequences.apps.SequencesConfig',
 ]
 
 GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyD7xt9P8jVg7JrzhPBIdrHHRThGcsvMoCY'

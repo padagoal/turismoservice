@@ -21,20 +21,21 @@
 
                                 <div class="offers_item rating_4">
                                     <div class="row">
-                                        <div class="col-lg-1 temp_col"></div>
                                         <div class="col-lg-3 col-1680-4">
                                             <div class="offers_image_container">
                                                 <!-- Image by https://unsplash.com/@kensuarez -->
                                                 <div class="offers_image_background" style="background-image:url({{ '/media/' }}{{ dato.foto_lugar }})"></div>
                                                 {% if dato.is_hotel %}
-                                                    <div class="offer_name"><a href="#result" onclick="showHotelPlace({{ dato.pk }})">{{ dato.name_place }}</a></div>
+                                                    <div class="offer_name">
+                                                        <a href="#result" onclick="showHotelPlace({{ dato.pk }})">
+                                                            {{ dato.name_place }}</a></div>
                                                 {% else %}
                                                     <div class="offer_name"><a href="#result" onclick="showHotelPlace({{ dato.pk }})">{{ dato.name_place }}</a></div>
                                                 {% endif %}
 
                                             </div>
                                         </div>
-                                        <div class="col-lg-8">
+                                        <div class="col-lg-6">
                                             <div class="offers_content">
                                                 <div class="offers_price">
                                                     {% if dato.is_hotel %}
@@ -62,6 +63,14 @@
 
                                                 </div>
                                             </div>
+                                        </div>
+
+                                        <div class="col-lg-1">
+
+                                            <button class="button search_button"
+                                                    title="{{ dato.pk }}_{{ dato.name_place }}_{{ dato.ciudad_lugar.nombre_ciudad }}"
+                                                    onclick="agregarLugarList(this.title)">
+                                                Agregar<span></span><span></span><span></span></button>
                                         </div>
                                     </div>
 						        </div>

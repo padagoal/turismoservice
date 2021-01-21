@@ -10,3 +10,4 @@ turismoproject_env
 db.sqlite3
 requirements.txt
 turismo39_env
+/db

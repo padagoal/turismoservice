@@ -9,7 +9,10 @@ from TurismoApp.models import Profile
 
 def index(request):
     username = request.user.username
-    return render(request,'travelix/main_detalle.html')
+    logueo_user = False
+    if request.user.is_authenticated:
+        logueo_user = True
+    return render(request,'travelix/main_detalle.html',{'logueo_user':logueo_user,'username':username})
 
 
 def history(request):
@@ -88,6 +91,6 @@ def profile_user(request):
 
 def logout_user(request):
     logout(request)
-    return redirect('/login')
+    return redirect('/')
 
 

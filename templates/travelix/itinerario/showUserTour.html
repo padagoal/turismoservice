@@ -1,0 +1,265 @@
+{% extends 'travelix/main.html' %}
+{% load static %}
+
+{% block titulo %}
+    {{ titulo }}
+{% endblock titulo %}
+{% block cabecera_extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/about_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/about_responsive.css' %}">
+{% endblock cabecera_extra_css %}
+
+{% block logueouser %}
+
+    <div class="user_box ml-auto">
+        {% if user.is_authenticated %}
+            <div class="user_box_login user_box_link"><a href="#">{{ 'Hola ' }}{{ user.username }}</a></div>
+            <div class="user_box_register user_box_link"><a href="{% url 'logout' %}">Cerrar</a></div>
+        {% else %}
+            <div class="user_box_login user_box_link"><a href="{% url 'login' %}">Ingresar</a></div>
+            <div class="user_box_register user_box_link"><a href="{% url 'register' %}">Registrarte</a></div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+
+
+{% block cuerpo_main %}
+
+    <!-- Home -->
+
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll"
+             data-image-src="{% static 'img/customtour.jpg' %}"></div>
+        <div class="home_content">
+            <div class="home_title" style="top: 100px">Estos son tus Tours ❤️😊</div>
+        </div>
+    </div>
+
+    <!-- Intro -->
+
+    <div class="intro">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <button class="button search_button"
+                            onclick="window.location.href='{% url "customtour" %}'">
+
+                        Crear Tour<span></span><span></span><span></span>
+                    </button>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+
+                <div class="col-lg-12">
+
+                    <!-- Resultados -->
+                    <div id="resultado_busqueda">
+                        <div class="offers">
+
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-1 temp_col"></div>
+                                    <div class="col-lg-11">
+
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <!-- Lugar Grilla -->
+
+                                        <div class="offers_grid">
+
+                                            {% if lista_data %}
+                                                {% for dato in lista_data %}
+
+                                                    <div class="offers_item rating_4">
+                                                        <div class="row">
+                                                            <div class="col-lg-3 col-1680-4">
+                                                                <div class="offers_image_container">
+                                                                    <!-- Image by https://unsplash.com/@kensuarez -->
+                                                                    <div class="offers_image_background"
+                                                                         style="background-image:url(
+                                                                                 {{ '/media/' }}{{ dato.tour_photo_cover }})"></div>
+
+                                                                    <div class="offer_name">
+                                                                        <a href="#result"
+                                                                           onclick="showHotelPlace({{ dato.pk }})">
+                                                                            {{ dato.tour_name }}</a></div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <div class="offers_content">
+                                                                    <div class="offers_price">
+                                                                        {{ dato.tour_name }}
+                                                                    </div>
+
+                                                                    <p class="offers_text">
+                                                                        {{ dato.tour_short_descripcion }}
+                                                                    </p>
+                                                                    <div class="offers_icons">
+                                                                        <ul class="offers_icons_list">
+                                                                            <li class="offers_icons_item"><img
+                                                                                    src="{% static 'travelix/images/post.png' %}"
+                                                                                    alt=""></li>
+                                                                        </ul>
+                                                                    </div>
+
+                                                                    <div class="offer_reviews">
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-lg-1">
+
+                                                                <button class="button search_button"
+                                                                        onclick="window.location.href='{% url "singleplacetourinfo" dato.pk %}'">
+                                                                    Ver<span></span><span></span><span></span>
+                                                                </button>
+                                                                <button class="button" style="
+
+	font-size: 13px;
+	font-weight: 700;
+	color: #fff;
+	text-transform: uppercase;
+	line-height: 53px;
+	padding-left: 46px;
+	padding-right: 46px;
+	background: #b52929;
+	-webkit-transform: translateY(15px);
+	-moz-transform: translateY(15px);
+	-ms-transform: translateY(15px);
+	-o-transform: translateY(15px);
+	transform: translateY(15px);
+	border: none;
+	outline: none;
+	cursor: pointer;
+	margin-top: 40px;
+"
+                                                                        onclick="window.location.href='{% url "deletetour" dato.pk %}'">
+                                                                    Eliminar tour<span></span><span></span><span></span>
+                                                                </button>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                {% endfor %}
+                                            {% else %}
+                                                <h3>Aun no tienes Tour creados !!</h3>
+                                                <button class="button search_button"
+                                                        onclick="window.location.href='{% url "customtour" %}'">
+
+                                                    Crear Tour<span></span><span></span><span></span>
+                                                </button>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    {% block extra_js_end_body %}
+        <script src="{% static 'travelix/plugins/parallax-js-master/parallax.min.js' %}"></script>
+        <script src="{% static 'travelix/js/about_custom.js' %}"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/debug.addIndicators.min.js"></script>
+
+
+        <script>
+            $('#ciudad_2').select2({
+                width: '100%',
+                placeholder: 'Ciudades',
+                ajax: {
+                    url: '{% url 'ciudadfiltro' %}',
+                    dataType: 'json',
+                    processResults: function (data) {
+                        var lista_datos = $.map(data.datos, function (obj) {
+                            obj.text = obj.text || obj.nombre_ciudad;
+                            return obj;
+                        });
+                        return {
+                            results: data.datos
+                        };
+
+                    }
+                }
+            });
+        </script>
+
+
+        <script>
+
+            function filtrarResultados() {
+
+                var listaActividadesSeleccionadas = document.querySelectorAll('input[name=listactivities]:checked');
+                var listaLugaresSeleccionadas = document.querySelectorAll('input[name=listplaces]:checked');
+                var listaViajesSeleccionados = document.querySelectorAll('input[name=listtravels]:checked');
+
+                var listaActividadesID = [];
+                var listaLugaresID = [];
+                var listaViajesID = [];
+
+                for (let dataID of listaActividadesSeleccionadas) {
+                    listaActividadesID.push(dataID.id);
+                }
+                for (let dataID of listaLugaresSeleccionadas) {
+                    listaLugaresID.push(dataID.id);
+                }
+                for (let dataID of listaViajesSeleccionados) {
+                    listaViajesID.push(dataID.id);
+                }
+
+                console.log(listaActividadesID);
+                console.log(listaLugaresID);
+                console.log(listaViajesID);
+
+                var lugar = $('#ciudad_2').val();
+
+                console.log(lugar);
+
+                $.ajax({
+                    type: 'GET',
+                    url: '{% url "listPlacesForTour" %}',
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        'citysearch': lugar,
+                        'listacti': listaActividadesID.join(","),
+                        'listlugar': listaLugaresID.join(","),
+                        'listviaje': listaViajesID.join(","),
+                        'isAjax': 'S'
+
+                    },
+                    success: function (data) {
+                        $('#resultado_busqueda').html(data);
+                        $('#resultado_busqueda').focus();
+                        console.log(data);
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+
+
+            }
+
+
+        </script>
+
+    {% endblock extra_js_end_body %}
+
+
+{% endblock cuerpo_main %}
