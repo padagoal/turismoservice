@@ -223,13 +223,9 @@
                     listaViajesID.push(dataID.id);
                 }
 
-                console.log(listaActividadesID);
-                console.log(listaLugaresID);
-                console.log(listaViajesID);
 
                 var lugar = $('#ciudad_2').val();
 
-                console.log(lugar);
 
                 $.ajax({
                     type: 'GET',
@@ -246,7 +242,6 @@
                     success: function (data) {
                         $('#resultado_busqueda').html(data);
                         $('#resultado_busqueda').focus();
-                        console.log(data);
                     },
                     error: function (data) {
                         console.log(data);
