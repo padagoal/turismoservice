@@ -7,13 +7,12 @@ admin.site.register(ServiceHotel)
 admin.site.register(ServiceRoom)
 
 
-
 class PhotosHotelInline(admin.TabularInline):
     model = PhotosHotel
 
 
-
 class HotelAdmin(admin.ModelAdmin):
+    list_display = (('hotel_lugar'), ('get_hotel_ciudad'),('get_hotel_services'),)
     inlines = [
         PhotosHotelInline,
     ]

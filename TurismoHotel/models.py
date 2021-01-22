@@ -2,6 +2,7 @@ from django.db import models
 from TurismoPlace.models import Lugar
 # Create your models here.
 
+
 class ServiceHotel(models.Model):
     service_name = models.CharField(verbose_name='Servicios del Hotel',max_length=100)
     service_icon = models.ImageField(upload_to='hotel/icon', null=True, blank=True)
@@ -55,8 +56,14 @@ class Hotel(models.Model):
         return self.hotel_lugar.name_place
 
     def get_hotel_services(self):
-        return "\n".join([p.service_name for p in self.hotel_services.all()])
+        return "\n- ".join([p.service_name for p in self.hotel_services.all()])
 
+    get_hotel_services.short_description = 'Servicios Hotel'
+
+    def get_hotel_ciudad(self):
+        return self.hotel_lugar.ciudad_lugar.nombre_ciudad
+
+    get_hotel_ciudad.short_description = 'Ciudad Hotel'
 
 class Rooms(models.Model):
     room_hotel = models.ForeignKey(Hotel,on_delete=models.DO_NOTHING)
@@ -101,3 +108,23 @@ class PhotosHotel(models.Model):
 
     def __str__(self):
         return self.hotel_ph.hotel_lugar.name_place + ' ' + str(self.photo_hotel)
+
+
+class ReservasHotel(models.Model):
+    rooms_selected = models.ManyToManyField(Rooms,related_name='room_selected_by_user')
+    fecha_reserva = models.DateField(verbose_name='Fecha Creacion Reserva')
+    fecha_inicio_reservada = models.DateField(verbose_name='Fecha inicio Reserva')
+    fecha_fin_reservada = models.DateField(verbose_name='Fecha fin Reserva')
+    cantidad_personas_reserva = models.IntegerField(default=1,verbose_name='Cantidad Personas Reserva')
+    concretada_reserva = models.BooleanField(verbose_name='Concretada',default=False)
+
+    class Meta:
+        verbose_name = 'Reserva'
+        verbose_name_plural = 'Reservas'
+
+    def get_hotel(self):
+        return "\n".join([p.room_hotel.hotel_lugar.name_place for p in self.rooms_selected.all()])
+
+    def __str__(self):
+        return str(self.fecha_reserva) + str(self.get_hotel)
+
