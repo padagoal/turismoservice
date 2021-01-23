@@ -28,7 +28,7 @@ if os.getcwd() == '/var/www/html/turismoservice':
     ALLOWED_HOSTS = ['turismoapp.creatu.co','comunidadturismo.com','www.comunidadturismo.com']
 else:
     DEBUG = True
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = ['192.168.2.6','127.0.0.1']
 
 
 
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'TurismoRestApi.apps.TurismorestapiConfig',
     'TurismoHotel.apps.TurismohotelConfig',
     'TurismoTour.apps.TurismotourConfig',
+    'TurismoBlog.apps.TurismoblogConfig',
     'geoposition',
     'rest_framework',
     'sequences.apps.SequencesConfig',

@@ -1,6 +1,7 @@
 from django.urls import path
 from TurismoPlace.views import *
 from TurismoTour.views import *
+from TurismoBlog.views import *
 urlpatterns = [
 
     #API
@@ -44,10 +45,19 @@ urlpatterns = [
 
     path('drawPlacesForTour/',draw_list_places_user_choice,name='drawPlacesForTour'),
 
-    path('saveTourFromUser',saveTourFromUser,name='saveTourFromUser')
+    path('saveTourFromUser/',saveTourFromUser,name='saveTourFromUser'),
 
 
 
+
+
+    #Blog
+
+    path('blog/index/',index_blog,name='indexBlog'),
+    path('blog/newPost/',post_new,name='newPost'),
+    path('blog/login/',login_user_blog,name='blogLogin'),
+    path('blog/logout/',logout_user_blog,name='blogLogout'),
+    path('blog/PostUser',post_user,name='postUser')
 
 ]
 
