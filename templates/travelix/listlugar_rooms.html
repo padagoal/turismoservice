@@ -21,6 +21,21 @@
     </div>
 
 {% endblock cuerpo_main_detalle_home %}
+{% block logueouser %}
+                                <div class="user_box ml-auto">
+                                    {% if user.is_authenticated %}
+                                        <div class="user_box_login user_box_link"><a href="#">
+                                            {{ 'Hola ' }}{{ user.username }}</a></div>
+                                        <div class="user_box_register user_box_link"><a
+                                                href="{% url 'logout' %}">Cerrar</a></div>
+                                    {% else %}
+                                        <div class="user_box_login user_box_link"><a
+                                                href="{% url 'login' %}">Ingresar</a></div>
+                                        <div class="user_box_register user_box_link"><a href="{% url 'register' %}">Registrarte</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endblock logueouser %}
 
 
 <!-- Search - Main Detalle -->
@@ -211,7 +226,7 @@
                 <div class="col-lg-11">
                     <div id="result" class="elements_title" style="padding-top: 1em">Opciones en {{ nombre_ciudad }}</div>
                     <div id="result" class="elements_title" style="padding-top: 1em;font-size: 20px;">
-                        {{  rango_original}}
+                        {{rango_original}}
                     </div>
                 </div>
 
@@ -273,9 +288,16 @@
                                                     </div>
                                                     <div class="col-lg-3 text-lg-right">
                                                         <div class="room_button">
-                                                            <div class="button book_button trans_200"><a
-                                                                    href="#">Reservar<span></span><span></span><span></span></a>
-                                                            </div>
+                                                            <form action="{% url 'createReservation' rooms_dato.pk %}">
+                                                                <input type="hidden" value="{{ rango_buscardor }}"
+                                                                       name="rangofec">
+                                                                <input type="hidden" value="{{ cantidad_people }}"
+                                                                       name="cantidad_people">
+                                                                <button class="button search_button">
+                                                                    Reservar<span></span><span></span><span></span>
+                                                                </button>
+                                                            </form>
+
                                                         </div>
                                                     </div>
                                                 </div>

@@ -115,8 +115,13 @@ class ReservasHotel(models.Model):
     fecha_reserva = models.DateField(verbose_name='Fecha Creacion Reserva')
     fecha_inicio_reservada = models.DateField(verbose_name='Fecha inicio Reserva')
     fecha_fin_reservada = models.DateField(verbose_name='Fecha fin Reserva')
+    cantidad_dias_reserva = models.IntegerField(default=1, verbose_name='Cantidad de Dias de la Reserva')
     cantidad_personas_reserva = models.IntegerField(default=1,verbose_name='Cantidad Personas Reserva')
+    user_id = models.IntegerField(default=0,verbose_name='User id')
+    costo_reserva = models.IntegerField(default=0,verbose_name='Costo Reserva')
     concretada_reserva = models.BooleanField(verbose_name='Concretada',default=False)
+    active = models.BooleanField(default=True,verbose_name='Activo')
+
 
     class Meta:
         verbose_name = 'Reserva'

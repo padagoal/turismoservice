@@ -1,14 +1,17 @@
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render
 
 # Create your views here.
 from django.shortcuts import render
+from datetime import date
 from .serializers import LugarTipoSerial, DestinoTipoSerial, ActividadTipoSerial, ViajeTipoSerial, CiudadFiltroSerial, \
     LugarSerial, LugarSerialAll
 from TurismoPlace.models import LugarTipo, DestinoTipo, ActividadesTipo, ViajeTipo, Ciudad, Lugar
 from TurismoHotel.models import Hotel, Rooms, PhotosHotel, ReservasHotel
 from django.http import HttpResponse, JsonResponse
-
+from TurismoHotel.forms import ReservaHotelForm
+from utils import send_mail
 
 # Create your views here.
 
@@ -75,13 +78,15 @@ def listAvailableRoomsVista(request):
                                                room_capacity_child__gte=children) \
         .exclude(pk__in=obtener_pk_habitaciones(reservas_en_fecha_pedida))\
 
-    print(habitaciones_libres)
+
     return render(request, 'travelix/listlugar_rooms.html', {
         'titulo': 'Hoteles en ' + nombre_ciudad.nombre_ciudad,
         'lista_data': habitaciones_libres,
         'nombre_ciudad': nombre_ciudad.nombre_ciudad,
         'activar': 'hotel',
-        'rango_original':rango_original
+        'rango_original':rango_original,
+        'rango_buscardor':fechaCheckinDato+"/"+fechaCheckoutDato,
+        'cantidad_people':adults
     })
 
 
@@ -92,6 +97,52 @@ def obtener_pk_habitaciones(reservas_en_fecha_pedida):
         listPk.append(reservas.rooms_selected.pk)
 
     return listPk
+
+
+@login_required(login_url='/login')
+def createReservation(request,pk):
+
+    rango_fecha = request.GET.get('rangofec')
+    cantidad_personas_reserva = request.GET.get('cantidad_people')
+    rango_fecha_sep = rango_fecha.split("/")
+    checkIn = rango_fecha_sep[0].split("-")
+    checkOut = rango_fecha_sep[1].split("-")
+    habitacion_a_reservar = Rooms.objects.get(pk=pk)
+    user_id = request.user.id
+    fecha_reserva = date.today()
+
+    f_date = date(int(checkIn[0]), int(checkIn[1]), int(checkIn[2]))
+    l_date = date(int(checkOut[0]), int(checkOut[1]), int(checkOut[2]))
+    cantidad_dias_reserva = int((l_date - f_date).days)
+
+    if habitacion_a_reservar.room_promo > 0:
+        costo_reserva = habitacion_a_reservar.room_promo * cantidad_dias_reserva
+    else:
+        costo_reserva = habitacion_a_reservar.room_price*cantidad_dias_reserva
+
+    formReservaHotel = ReservaHotelForm()
+
+    reserva = formReservaHotel.save(commit=False)
+
+    reserva.rooms_selected=habitacion_a_reservar
+    reserva.fecha_reserva = fecha_reserva
+    reserva.fecha_inicio_reservada = f_date
+    reserva.fecha_fin_reservada = l_date
+    reserva.cantidad_dias_reserva = cantidad_dias_reserva
+    reserva.cantidad_personas_reserva = cantidad_personas_reserva
+    reserva.user_id = user_id
+    reserva.costo_reserva = costo_reserva
+
+    reserva.save()
+
+    send_mail.enviar_mail()
+
+    return render(request, 'travelix/reserva/overview_reserva_hotel.html', {
+        'reserva': reserva,
+        'rangofecha ': rango_fecha,
+        'costo_reserva': costo_reserva
+    })
+
 
 
 def buscarActividadVista(request):

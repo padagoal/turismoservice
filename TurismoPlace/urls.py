@@ -30,6 +30,8 @@ urlpatterns = [
 
     path('listAvailableRooms/',listAvailableRoomsVista,name= 'listAvailableRooms'),
 
+    path('createReservation/<int:pk>',createReservation,name='createReservation'),
+
 
     #CustomTour
     path('customtour/',customtour,name='customtour'),

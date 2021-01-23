@@ -1,0 +1,54 @@
+{% extends 'travelix/main.html' %}
+{% load humanize %}
+{% block titulo %} Reserva Nro. {{ reserva.pk }}{% endblock titulo %}
+{% block cuerpo_main %}
+    {% block secciones_internas %}
+        <div class="intro">
+            <div class="container fill_height">
+                <div class="row fill_height" style=" margin-top: 10%;">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                        <h2 class="intro_title text-center">
+                            Resumen de la Reserva realizada
+                        </h2>
+
+                        <div class="info-reserva">
+                            <ul class="list-group list-group-horizontal">
+                                <li class="list-group-item flex-fill"> <b>Ciudad</b> </li>
+                                <li class="list-group-item flex-fill">{{ reserva.rooms_selected.room_hotel.hotel_lugar.ciudad_lugar.nombre_ciudad }}</li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal">
+                                <li class="list-group-item flex-fill"><b>Hotel</b></li>
+                                <li class="list-group-item flex-fill">{{ reserva.rooms_selected.room_hotel }}</li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal-sm">
+                                <li class="list-group-item flex-fill"><b>Habitacion</b></li>
+                                <li class="list-group-item flex-fill">{{ reserva.rooms_selected }}</li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal-md">
+                                <li class="list-group-item flex-fill"><b>Check in</b></li>
+                                <li class="list-group-item flex-fill">{{ reserva.fecha_inicio_reservada }}</li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal-lg">
+                                <li class="list-group-item flex-fill"><b>Check out</b></li>
+                                <li class="list-group-item flex-fill">{{ reserva.fecha_fin_reservada }}</li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal-xl">
+                                <li class="list-group-item flex-fill"><b>Costo Reserva:</b></li>
+                                <li class="list-group-item flex-fill">
+                                    {{ reserva.costo_reserva|intcomma }}{{ ' Gs.' }} </li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal-xxl">
+                                <li class="list-group-item flex-fill"><b>Cantidad Personas:</b></li>
+                                <li class="list-group-item flex-fill">{{ reserva.cantidad_personas_reserva }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3"></div>
+                </div>
+            </div>
+        </div>
+
+
+    {% endblock secciones_internas %}
+{% endblock cuerpo_main %}
