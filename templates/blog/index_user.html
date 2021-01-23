@@ -1,0 +1,55 @@
+{% extends 'blog/index.html' %}
+{% load static %}
+
+{% block index_interno %}
+    <div id="colorlib-main">
+        <section class="ftco-section ftco-no-pt ftco-no-pb bg-light">
+            <div class="container px-0">
+                <div class="row no-gutters">
+                    {% if posts %}
+                        {% for post in posts %}
+                            <!-- Segunda Fila -->
+                            <div class="col-md-4 d-flex">
+                                <div class="blog-entry ftco-animate">
+                                    <a href="#" class="img"
+                                       style="background-image: url('{{ '/media/' }}{{ post.photo }}');"></a>
+                                    <div class="text p-4">
+                                        <h3 class="mb-2"><a href="#">{{ post.title_post }}</a></h3>
+                                        <div class="meta-wrap">
+                                            <p class="meta">
+                                                <span><i class="icon-calendar mr-2"></i>{{ post.created_date }}</span>
+                                                <span><a href="#"><i
+                                                        class="icon-folder-o mr-2"></i>Viajes</a></span>
+                                                <span><i class="icon-heart mr-2"></i>{{ post.likes }} likes</span>
+                                            </p>
+                                        </div>
+                                        <p class="mb-4">{{ post.descripcion_post }}️</p>
+                                        <p>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div id="colorlib-main">
+                            <section class="ftco-section ftco-no-pt ftco-no-pb bg-light">
+                                <div class="container px-0">
+                                    <div class="row no-gutters">
+                                        <div class="col-md-8">
+                                            <div class="text p-4">
+                                                <center>
+                                                    <h2 class="mb-2">Aun no tienes Posts Creados ☹️</h2>
+                                                </center>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock index_interno %}

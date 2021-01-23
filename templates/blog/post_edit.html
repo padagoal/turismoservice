@@ -1,0 +1,25 @@
+{% extends 'blog/index.html' %}
+
+{% block index_interno %}
+    <div id="colorlib-main">
+        <section class="ftco-section ftco-no-pt ftco-no-pb bg-light">
+            <div class="container px-0">
+                <div class="row no-gutters">
+                    <div class="col-md-8">
+                        <div class="text p-4">
+                            <center>
+                                <h2 class="mb-2">Nuevo post</h2>
+                            </center>
+                            <form method="POST" enctype="multipart/form-data" action="{% url 'newPost' %}" class="post-form">{% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit" class="save btn btn-success">Guardar</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock index_interno %}
