@@ -31,6 +31,7 @@
             <ul>
                 <li class="colorlib-active"><a href="{% url 'indexBlog' %}">Home</a></li>
                 {% if user.is_authenticated %}
+                    <li><a href="#">Hola {{ user.username|upper }} !</a></li>
                     <li><a href="{% url 'newPost' %}">Crear un Post</a></li>
                     <li><a href="{% url 'postUser' %}">Tus Posts</a></li>
                     <li><a href="{% url 'blogLogout' %}">Cerrar Sesion</a></li>

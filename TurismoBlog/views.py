@@ -7,7 +7,8 @@ from .forms import *
 # Create your views here.
 
 def index_blog(request):
-    return render(request, 'blog/index_interno.html', {})
+    posts = Post.objects.all()
+    return render(request, 'blog/index_interno.html', {'posts': posts})
 
 
 def post_user(request):
