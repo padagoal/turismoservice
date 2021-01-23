@@ -1,7 +1,7 @@
 from random import randint
 
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from TurismoPlace.models import ActividadesTipo, LugarTipo, ViajeTipo, Lugar
 from itertools import chain
 from .forms import *
@@ -31,14 +31,8 @@ def delete_tour(request, pk):
     if tour_delete:
         tour_delete.delete()
     else:
-        tours = Tour.objects.filter(user_id=request.user.id)
-        return render(request, 'travelix/itinerario/showUserTour.html', {
-            'lista_data': tours,
-        })
-    tours = Tour.objects.filter(user_id=request.user.id)
-    return render(request, 'travelix/itinerario/showUserTour.html', {
-        'lista_data': tours,
-    })
+        return redirect(list_tour_user)
+    return redirect(list_tour_user)
 
 
 def _get_random_tour():

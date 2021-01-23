@@ -24,19 +24,23 @@
 
     <!-- Intro -->
 
+    {% if lista_data %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <button class="button search_button"
+                            onclick="window.location.href='{% url "customtour" %}'">
+                        Crear Tour<span></span><span></span><span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <br>
+    <br>
     <div class="intro">
         <div class="container-fluid">
-            {% if lista_data %}
-                <div class="row">
-                    <div class="col-lg-12">
-                        <button class="button search_button"
-                                onclick="window.location.href='{% url "customtour" %}'">
-
-                            Crear Tour<span></span><span></span><span></span>
-                        </button>
-                    </div>
-                </div>
-            {% endif %}
             <br>
             <div class="row">
 
@@ -45,21 +49,16 @@
                     <!-- Resultados -->
                     <div id="resultado_busqueda">
                         <div class="offers">
-
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-lg-1 temp_col"></div>
-                                    <div class="col-lg-11">
-
-                                    </div>
-
                                     <div class="col-lg-12">
                                         <!-- Lugar Grilla -->
 
                                         <div class="offers_grid">
-                                            <h2>Estos son tus tours </h2>
-                                        <br>
+
                                             {% if lista_data %}
+                                                <h2>Estos son tus tours </h2>
+                                                <br>
                                                 {% for dato in lista_data %}
                                                     <div class="offers_item rating_4">
                                                         <div class="row">
@@ -136,14 +135,15 @@
                                                     <br>
                                                 {% endfor %}
                                             {% else %}
-                                                <h3>Aun no tienes Tour creados !!</h3>
-                                                <button class="button search_button"
-                                                        onclick="window.location.href='{% url "customtour" %}'">
-
-                                                    Crear Tour<span></span><span></span><span></span>
-                                                </button>
+                                                <div class="offers_item rating_4">
+                                                    <h3>Aun no tienes Tour creados !!</h3>
+                                                    <button class="button search_button"
+                                                            onclick="window.location.href='{% url "customtour" %}'">
+                                                        Crear un Tour<span></span><span></span><span></span>
+                                                    </button>
+                                                </div>
                                             {% endif %}
-
+                                            <br>
                                             <h2>Estos son algunos tours que nosotros te recomendamos</h2>
                                             <br>
                                             {% if data_staff %}
