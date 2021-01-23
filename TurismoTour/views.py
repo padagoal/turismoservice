@@ -25,7 +25,7 @@ def tour_info(request, pk):
     })
 
 
-def delete_tour(request,pk):
+def delete_tour(request, pk):
     tour_a_eliminar = pk
     tour_delete = Tour.objects.get(pk=tour_a_eliminar)
     if tour_delete:
@@ -40,22 +40,33 @@ def delete_tour(request,pk):
         'lista_data': tours,
     })
 
+
 def _get_random_tour():
     services = Tour.objects.filter(is_from_staff=True)
-    i = randint(0, services.count()-1)
+    i = randint(0, services.count() - 1)
     return services[i]
+
 
 def list_tour_user(request):
     tours = Tour.objects.filter(user_id=request.user.id)
-    lista_data_staff = _get_random_tour()
-    mensaje_vacio = False
-    if len(tours) == 0:
-        mensaje_vacio = True
-    return render(request, 'travelix/itinerario/showUserTour.html', {
-        'lista_data': tours,
-        'lista_data_staff': lista_data_staff,
-        'mensaje_vacio': mensaje_vacio
-    })
+    data_staff = _get_random_tour()
+    mensaje_vacio = True
+    if len(tours) > 0:
+        mensaje_vacio = False
+
+    if mensaje_vacio:
+        response = {
+            'data_staff': data_staff,
+            'mensaje_vacio': mensaje_vacio
+        }
+    else:
+        response = {
+            'lista_data': tours,
+            'lista_data_staff': data_staff,
+            'mensaje_vacio': mensaje_vacio
+        }
+
+    return render(request, 'travelix/itinerario/showUserTour.html', response)
 
 
 @login_required(login_url='/login')
@@ -133,6 +144,5 @@ def saveTourFromUser(request):
     tour.save()
     tour.tour_lugar.set(tourPlaces)
     tour.save()
-
 
     return list_tour_user(request)
