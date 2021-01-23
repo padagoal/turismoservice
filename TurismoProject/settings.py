@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'geoposition',
     'rest_framework',
     'sequences.apps.SequencesConfig',
+    'django.contrib.humanize',
 ]
 
 GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyD7xt9P8jVg7JrzhPBIdrHHRThGcsvMoCY'
@@ -132,7 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-py'
 
 TIME_ZONE = 'UTC'
 

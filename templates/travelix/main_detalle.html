@@ -188,24 +188,22 @@
                         <!-- Search Panel -->
                         <!-- Hoteles -->
                         <div class="search_panel active">
-                            <form action="#" id="search_form_1"
+                            <form action="{% url 'listAvailableRooms' %}" id="search_form_1"
                                   class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center
                               align-items-start justify-content-lg-between justify-content-start">
 
                                 <div class="search_item">
-                                    <div>destination</div>
-                                    <input type="text" class="destination search_input" required="required">
+                                    <div>Ciudad</div>
+                                    <select name="ciudad" id="ciudad_2" class="form-control ">
+                                    </select>
                                 </div>
 
                                 <div class="search_item">
-                                    <div>check in</div>
-                                    <input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
+                                    <div>check in - check out</div>
+                                    <input type="text" name="checkin" class="check_in search_input"
+                                           placeholder="DD-MM-YYYY" required>
                                 </div>
 
-                                <div class="search_item">
-                                    <div>check out</div>
-                                    <input type="text" class="check_out search_input" placeholder="YYYY-MM-DD">
-                                </div>
 
                                 <div class="search_item">
                                     <div>adults</div>
@@ -213,6 +211,13 @@
                                         <option>01</option>
                                         <option>02</option>
                                         <option>03</option>
+                                        <option>04</option>
+                                        <option>05</option>
+                                        <option>06</option>
+                                        <option>07</option>
+                                        <option>08</option>
+                                        <option>09</option>
+                                        <option>10</option>
                                     </select>
                                 </div>
 
@@ -220,8 +225,11 @@
                                     <div>children</div>
                                     <select name="children" id="children_1" class="dropdown_item_select search_input">
                                         <option>0</option>
+                                        <option>01</option>
                                         <option>02</option>
                                         <option>03</option>
+                                        <option>04</option>
+                                        <option>05</option>
                                     </select>
                                 </div>
                                 <button class="button search_button">search<span></span><span></span><span></span>
@@ -236,7 +244,7 @@
                                   class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
                                 <div class="search_item">
                                     <div>Ciudad</div>
-                                    <select name="ciudad" id="ciudad_2" class="form-control ">
+                                    <select name="ciudad" id="ciudad_22" class="form-control ">
                                     </select>
                                 </div>
 
@@ -1126,6 +1134,24 @@
                 }
             }
         });
+               $('#ciudad_22').select2({
+            width: '100%',
+            placeholder: 'Ciudades',
+            ajax: {
+                url: '{% url 'ciudadfiltro' %}',
+                dataType: 'json',
+                processResults: function (data) {
+                    var lista_datos = $.map(data.datos, function (obj) {
+                        obj.text = obj.text || obj.nombre_ciudad;
+                        return obj;
+                    });
+                    return {
+                        results: data.datos
+                    };
+
+                }
+            }
+        });
         $('#viajes_2').select2({
             width: '100%',
             allowClear: true,
@@ -1287,10 +1313,30 @@
             });
         }
 
+        $(function () {
+            var checkin = $('input[name="checkin"]');
+            checkin.daterangepicker({
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: 'Clear'
+                }
+            });
+
+            checkin.on('apply.daterangepicker', function (ev, picker) {
+                $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+            });
+
+            checkin.on('cancel.daterangepicker', function (ev, picker) {
+                $(this).val('');
+            });
+
+        });
     </script>
 {% endblock cuerpo_main %}
 
 
 {% block extra_js_end_body %}
-
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
 {% endblock extra_js_end_body %}

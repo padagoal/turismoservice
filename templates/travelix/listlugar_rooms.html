@@ -1,0 +1,483 @@
+{% extends 'travelix/main_detalle.html' %}
+{% load static %}
+{% load humanize %}
+{% block titulo %} {{ titulo }}{% endblock titulo %}
+{% block cabecera_extra_css_detalle %}
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/offers_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/offers_responsive.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/elements_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/elements_responsive.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/single_listing_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/single_listing_responsive.css' %}">
+{% endblock cabecera_extra_css_detalle %}
+
+{% block cuerpo_main_detalle_home %}
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll"
+             style="background-image:url({% static 'travelix/images/about_background.jpg' %})"></div>
+        <div class="home_content">
+            <div class="home_title">our offers</div>
+        </div>
+    </div>
+
+{% endblock cuerpo_main_detalle_home %}
+
+
+<!-- Search - Main Detalle -->
+{% block seccion_search %}
+    <div class="search">
+
+
+        <!-- Search Contents -->
+
+        <div class="container fill_height">
+            <div class="row fill_height">
+                <div class="col fill_height">
+
+                    <!-- Search Tabs -->
+
+                    <div class="search_tabs_container">
+                        <div class="search_tabs d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+                            <div class="search_tab {% if activar == 'hotel' %} active {% endif %} d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
+                                <img src="{% static 'travelix/images/suitcase.png' %}" alt=""><span>hotels</span></div>
+                            <div class="search_tab {% if activar == 'viaje' %} active {% endif %} d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
+                                <img src="{% static 'travelix/images/bus.png' %}" alt="">Viajes
+                            </div>
+                            <!--<div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
+                                <img src="{% static 'travelix/images/departure.png'%}" alt="">flights</div> -->
+                            <div class="search_tab {% if activar == 'lugar' %} active {% endif %} d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
+                                <img src="{% static 'travelix/images/island.png' %}" alt="">Lugares
+                            </div>
+                            <div class="search_tab {% if activar == 'destino' %} active {% endif %} d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
+                                <img src="{% static  'travelix/images/cruise.png' %}" alt="">Destinos
+                            </div>
+                            <div class="search_tab {% if activar == 'actividad' %} active {% endif %} d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
+                                <img src="{% static 'travelix/images/diving.png' %}" alt="">Actividades
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Search Panel -->
+                    <!-- Hoteles -->
+                    <div class="search_panel {% if activar == 'hotel' %} active {% endif %}">
+                        <form action="{% url 'listAvailableRooms' %}" id="search_form_1"
+                              class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center
+                              align-items-start justify-content-lg-between justify-content-start">
+
+                            <div class="search_item">
+                                <div>Ciudad</div>
+                                <select name="ciudad" id="ciudad_2" class="form-control ">
+                                </select>
+                            </div>
+
+                            <div class="search_item">
+                                <div>check in - check out</div>
+                                <input type="text" name="checkin" class="check_in search_input"
+                                       placeholder="DD-MM-YYYY" required>
+                            </div>
+
+
+                            <div class="search_item">
+                                <div>adults</div>
+                                <select name="adults" id="adults_1" class="dropdown_item_select search_input">
+                                    <option>01</option>
+                                    <option>02</option>
+                                    <option>03</option>
+                                    <option>04</option>
+                                    <option>05</option>
+                                    <option>06</option>
+                                    <option>07</option>
+                                    <option>08</option>
+                                    <option>09</option>
+                                    <option>10</option>
+                                </select>
+                            </div>
+
+                            <div class="search_item">
+                                <div>children</div>
+                                <select name="children" id="children_1" class="dropdown_item_select search_input">
+                                    <option>0</option>
+                                    <option>01</option>
+                                    <option>02</option>
+                                    <option>03</option>
+                                    <option>04</option>
+                                    <option>05</option>
+                                </select>
+                            </div>
+                            <button class="button search_button">Buscar<span></span><span></span><span></span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Search Panel -->
+                    <!-- Viajes -->
+                    <div class="search_panel {% if activar == 'viaje' %} active {% endif %}">
+                        <div id="search_form_3"
+                             class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center
+                             align-items-start justify-content-lg-between justify-content-start">
+                            <div class="search_item">
+                                <div>Ciudad</div>
+                                <select name="ciudad" id="ciudad_2" class="form-control ">
+                                </select>
+                            </div>
+
+                            <div class="search_item">
+                                <div>Tipo de Viajes</div>
+                                <select name="viaje" id="viajes_2" class="form-control ">
+                                </select>
+                            </div>
+                            <button class="button search_button" onclick="buscarporViaje()">
+                                Buscar<span></span><span></span><span></span></button>
+                        </div>
+                    </div>
+
+                    <!-- Search Panel -->
+                    <!-- Lugares -->
+                    <div class="search_panel {% if activar == 'lugar' %} active {% endif %}">
+                        <div id="search_form_4" class="search_panel_content d-flex flex-lg-row flex-column
+						align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+                            <div class="search_item">
+                                <div>Ciudad</div>
+                                <select name="ciudad" id="ciudad_4" class="form-control ">
+                                </select>
+                            </div>
+
+                            <div class="search_item">
+                                <div>Tipo de Lugar</div>
+                                <select name="lugar" id="lugares_4" class="form-control ">
+                                </select>
+                            </div>
+                            <button class="button search_button" onclick="buscarporLugar()">
+                                Buscar<span></span><span></span><span></span></button>
+                        </div>
+                    </div>
+
+                    <!-- Search Panel -->
+                    <!-- Destinos -->
+                    <div class="search_panel {% if activar == 'destino' %} active {% endif %}">
+                        <div id="search_form_5"
+                             class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+                            <!--<div class="search_item">
+                                <div>Ciudad</div>
+                                <select name="ciudad" id="ciudad_5" class="form-control ">
+                                </select>
+                            </div>-->
+
+                            <div class="search_item" style="width: 80%">
+                                <div>Destinos</div>
+                                <select name="destinos" id="destinos_5" class="form-control ">
+                                </select>
+                            </div>
+                            <button class="button search_button" onclick="buscarpordestino()">
+                                Buscar<span></span><span></span><span></span></button>
+                        </div>
+                    </div>
+
+                    <!-- Search Panel Actividades-->
+
+                    <div class="search_panel {% if activar == 'actividad' %} active {% endif %}">
+                        <div id="search_form_6"
+                             class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center
+                              align-items-start justify-content-lg-between justify-content-start">
+                            <div class="search_item">
+                                <div>Ciudad</div>
+                                <select name="ciudad" id="ciudad_6" class="form-control ">
+                                </select>
+                            </div>
+
+                            <div class="search_item">
+                                <div>Actividades</div>
+                                <select name="actividad" id="actividad_6" class="form-control ">
+                                </select>
+                            </div>
+                            <button class="button search_button" onclick="buscarporActividad()">
+                                Buscar<span></span><span></span><span></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock seccion_search %}
+
+{% block secciones_internas %}
+    <div id="resultado_busqueda">
+    <div class="offers">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-1 temp_col"></div>
+                <div class="col-lg-11">
+                    <div id="result" class="elements_title" style="padding-top: 1em">Opciones en {{ nombre_ciudad }}</div>
+                    <div id="result" class="elements_title" style="padding-top: 1em;font-size: 20px;">
+                        {{  rango_original}}
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <!-- Lugar Grilla -->
+
+                    <div class="offers_grid" style="margin-top: 0">
+
+                        {% if lista_data %}
+
+                            <div class="offers_item rating_4">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="rooms">
+                                        <div>
+                                            <div class="more_info_title">Estas son las habitaciones
+                                                que tenemos disponibles
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <!-- Room -->
+                                        {% for rooms_dato in lista_data %}
+
+                                            <div class="room">
+
+                                                <!-- Room -->
+                                                <div class="row">
+                                                    <div class="col-lg-2">
+                                                        <div class="room_image"><img
+                                                                src="{{ '/media/' }}{{ rooms_dato.photo_room }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-7">
+                                                        <div class="room_content">
+                                                            <div class="room_title">{{ rooms_dato.room_hotel }}</div>
+                                                            <div class="room_title">{{ rooms_dato.room_name }}</div>
+
+                                                            <div class="room_price">{{ rooms_dato.room_price|intcomma }}
+                                                                Gs. por dia
+                                                            </div>
+                                                            <div class="room_text">{{ rooms_dato.room_desc }}</div>
+                                                            <br>
+                                                            <div class="room_title"><p> Capacidad:
+                                                                {% with ''|center:rooms_dato.room_capacity_adult as range %}
+                                                                    {% for _ in range %}
+                                                                        👤
+                                                                    {% endfor %}
+                                                                {% endwith %}
+                                                            </p>
+                                                            </div>
+                                                            <div class="room_title">
+                                                                <p>
+                                                                    Servicios:
+                                                                    {{ rooms_dato.get_room_services }}
+                                                                </p>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 text-lg-right">
+                                                        <div class="room_button">
+                                                            <div class="button book_button trans_200"><a
+                                                                    href="#">Reservar<span></span><span></span><span></span></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% with hotelActual=rooms_primero.room_hotel %}
+                                            {% endwith %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock secciones_internas %}
+
+{% block extra_detalle_js %}
+
+    <!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyD7xt9P8jVg7JrzhPBIdrHHRThGcsvMoCY"></script>-->
+    <script src="{% static 'travelix/js/single_listing_custom.js' %}"></script>
+
+    <script type="text/javascript">
+        function showPlace(lugar) {
+
+            $.ajax({
+                type: 'GET',
+                url: '{% url "singleplaceinfo" %}',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'lugar': lugar,
+                    'isAjax': 'S'
+
+                },
+                success: function (data) {
+                    $('#resultado_busqueda').html(data);
+                    $('#resultado_busqueda').focus();
+
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+
+
+        }
+
+        function showHotelPlace(lugar) {
+
+            $.ajax({
+                type: 'GET',
+                url: '{% url "singleplacehotelinfo" %}',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'lugar': lugar,
+                    'isAjax': 'S'
+
+                },
+                success: function (data) {
+                    $('#resultado_busqueda').html(data);
+                    $('#resultado_busqueda').focus();
+
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+
+
+        }
+
+
+        function showTourInfo(lugar) {
+            $.ajax({
+                type: 'GET',
+                url: '{% url "singleplacetourinfo" %}',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'lugar': lugar,
+                    'isAjax': 'S'
+                },
+                success: function (data) {
+                    $('#resultado_busqueda').html(data);
+                    $('#resultado_busqueda').focus();
+
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+
+
+        function buscarporActividad() {
+            var ciudad = $('#ciudad_6').val();
+            var actividad = $('#actividad_6').val();
+
+            $.ajax({
+                type: 'GET',
+                url: '{% url "buscarActividadVista" %}',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'ciudad': ciudad,
+                    'actividad': actividad,
+                    'isAjax': 'S'
+
+                },
+                success: function (data) {
+                    $('#resultado_busqueda').html(data);
+                    $('#resultado_busqueda').focus();
+
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+
+        }
+
+        function buscarporViaje() {
+            var ciudad = $('#ciudad_2').val();
+            var viaje = $('#viajes_2').val();
+
+            $.ajax({
+                type: 'GET',
+                url: '{% url "buscarViajeVista" %}',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'ciudad': ciudad,
+                    'viaje': viaje,
+                    'isAjax': 'S'
+
+                },
+                success: function (data) {
+                    $('#resultado_busqueda').html(data);
+                    $('#resultado_busqueda').focus();
+
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+
+        }
+
+        function buscarpordestino() {
+            var ciudad = $('#destinos_5').val();
+            var destino = $('#destinos_5').val();
+
+            $.ajax({
+                type: 'GET',
+                url: '{% url "buscarDestinoVista" %}',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'ciudad': ciudad,
+                    'destino': destino,
+                    'isAjax': 'S'
+
+                },
+                success: function (data) {
+                    $('#resultado_busqueda').html(data);
+                    $('#resultado_busqueda').focus();
+
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        function buscarporLugar() {
+            var ciudad = $('#ciudad_4').val();
+            var lugar = $('#lugares_4').val();
+
+            $.ajax({
+                type: 'GET',
+                url: '{% url "buscarLugarVista" %}',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'ciudad': ciudad,
+                    'lugar': lugar,
+                    'isAjax': 'S'
+
+                },
+                success: function (data) {
+                    $('#resultado_busqueda').html(data);
+                    $('#resultado_busqueda').focus();
+
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+    </script>
+
+{% endblock extra_detalle_js %}
+
+{% block extra_extra_js %}
+{% endblock extra_extra_js %}
+
+

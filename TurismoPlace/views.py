@@ -1,11 +1,15 @@
+from django.db.models import Q
 from django.shortcuts import render
 
 # Create your views here.
 from django.shortcuts import render
-from .serializers import LugarTipoSerial,DestinoTipoSerial,ActividadTipoSerial,ViajeTipoSerial,CiudadFiltroSerial,LugarSerial,LugarSerialAll
-from TurismoPlace.models import LugarTipo,DestinoTipo,ActividadesTipo,ViajeTipo,Ciudad,Lugar
-from TurismoHotel.models import Hotel,Rooms,PhotosHotel
+from .serializers import LugarTipoSerial, DestinoTipoSerial, ActividadTipoSerial, ViajeTipoSerial, CiudadFiltroSerial, \
+    LugarSerial, LugarSerialAll
+from TurismoPlace.models import LugarTipo, DestinoTipo, ActividadesTipo, ViajeTipo, Ciudad, Lugar
+from TurismoHotel.models import Hotel, Rooms, PhotosHotel, ReservasHotel
 from django.http import HttpResponse, JsonResponse
+
+
 # Create your views here.
 
 
@@ -22,7 +26,72 @@ def buscarActividad(request):
 
     serializer = LugarSerial(lista_dato, many=True)
 
-    return JsonResponse(serializer.data,safe=False,status=200)
+    return JsonResponse(serializer.data, safe=False, status=200)
+
+
+def listAvailableRoomsVista(request):
+    if request.GET.get('ciudad') is not None:
+        ciudad = request.GET.get('ciudad')
+        lista_dato = Lugar.objects.filter(ciudad_lugar__id=ciudad)
+        nombre_ciudad = Ciudad.objects.get(pk=ciudad)
+    else:
+        lista_dato = Lugar.objects.filter(ciudad_lugar__id=3)
+        nombre_ciudad = Ciudad.objects.get(pk=3)
+        ciudad = 1
+
+    checkin = ""
+    rango_original = ""
+    if request.GET.get('checkin') is not None and request.GET.get('checkin') is not '':
+        checkin = request.GET.get('checkin')
+        rango_original = checkin
+        checkin = checkin.strip(" ")
+
+    adults = 1
+    if request.GET.get('adults') is not None and request.GET.get('adults') is not '':
+        adults = int(request.GET.get('adults'))
+    children = 0
+    if request.GET.get('children') is not None and request.GET.get('adults') is not '':
+        children = int(request.GET.get('children'))
+
+    fechasSeparadas = checkin.split("-")
+    fechaCheckin = fechasSeparadas[0].split("/")
+    fechaCheckout = fechasSeparadas[1].split("/")
+
+    fechaCheckinDato = fechaCheckin[2].strip(" ") + "-" + fechaCheckin[1].strip(" ") + "-" + fechaCheckin[0].strip(" ")
+    fechaCheckoutDato = fechaCheckout[2].strip(" ") + "-" + fechaCheckout[1].strip(" ") + "-" \
+                        + fechaCheckout[0].strip(" ")
+
+    #habitaciones_por_ciudad = Rooms.objects.filter(room_hotel__hotel_lugar__ciudad_lugar_id=ciudad,
+    #                                               room_capacity_adult__gte=adults,
+    #                                               room_capacity_child__gte=children)
+
+    reservas_en_fecha_pedida = ReservasHotel.objects.filter(
+        rooms_selected__room_hotel__hotel_lugar__ciudad_lugar_id=ciudad,
+        fecha_inicio_reservada__gte=fechaCheckinDato,
+        fecha_fin_reservada__lte=fechaCheckoutDato)
+
+    habitaciones_libres = Rooms.objects.filter(room_hotel__hotel_lugar__ciudad_lugar_id=ciudad,
+                                               room_capacity_adult__gte=adults,
+                                               room_capacity_child__gte=children) \
+        .exclude(pk__in=obtener_pk_habitaciones(reservas_en_fecha_pedida))\
+
+    print(habitaciones_libres)
+    return render(request, 'travelix/listlugar_rooms.html', {
+        'titulo': 'Hoteles en ' + nombre_ciudad.nombre_ciudad,
+        'lista_data': habitaciones_libres,
+        'nombre_ciudad': nombre_ciudad.nombre_ciudad,
+        'activar': 'hotel',
+        'rango_original':rango_original
+    })
+
+
+
+def obtener_pk_habitaciones(reservas_en_fecha_pedida):
+    listPk = []
+    for reservas in reservas_en_fecha_pedida:
+        listPk.append(reservas.rooms_selected.pk)
+
+    return listPk
 
 
 def buscarActividadVista(request):
@@ -34,7 +103,7 @@ def buscarActividadVista(request):
         lista_dato = Lugar.objects.filter(ciudad_lugar__id=3)
         nombre_ciudad = Ciudad.objects.get(pk=3)
 
-    if request.GET.get('actividad') is not None and request.GET.get('actividad') is not '' :
+    if request.GET.get('actividad') is not None and request.GET.get('actividad') is not '':
         actividad = request.GET.get('actividad')
         lista_dato = lista_dato.filter(tipo_actividad_lugar=actividad)
 
@@ -42,14 +111,14 @@ def buscarActividadVista(request):
         return render(request, 'travelix/onlylistlugar.html', {
             'titulo': 'Teste',
             'lista_data': lista_dato,
-            'nombre_ciudad':  nombre_ciudad.nombre_ciudad,
+            'nombre_ciudad': nombre_ciudad.nombre_ciudad,
             'activar': 'actividad'
         })
     else:
-        return render(request,'travelix/listlugar.html',{
+        return render(request, 'travelix/listlugar.html', {
             'titulo': 'Atractivos en ' + nombre_ciudad.nombre_ciudad,
             'lista_data': lista_dato,
-            'nombre_ciudad':  nombre_ciudad.nombre_ciudad,
+            'nombre_ciudad': nombre_ciudad.nombre_ciudad,
             'activar': 'actividad'
         })
 
@@ -71,16 +140,17 @@ def buscarViajeVista(request):
         return render(request, 'travelix/onlylistlugar.html', {
             'titulo': 'Teste',
             'lista_data': lista_dato,
-            'nombre_ciudad':  nombre_ciudad.nombre_ciudad,
-            'activar':'viaje'
-        })
-    else:
-        return render(request,'travelix/listlugar.html',{
-            'titulo': 'Atractivos en ' + nombre_ciudad.nombre_ciudad,
-            'lista_data': lista_dato,
-            'nombre_ciudad':  nombre_ciudad.nombre_ciudad,
+            'nombre_ciudad': nombre_ciudad.nombre_ciudad,
             'activar': 'viaje'
         })
+    else:
+        return render(request, 'travelix/listlugar.html', {
+            'titulo': 'Atractivos en ' + nombre_ciudad.nombre_ciudad,
+            'lista_data': lista_dato,
+            'nombre_ciudad': nombre_ciudad.nombre_ciudad,
+            'activar': 'viaje'
+        })
+
 
 def buscarLugarVista(request):
     if request.GET.get('ciudad') is not None:
@@ -99,28 +169,28 @@ def buscarLugarVista(request):
         return render(request, 'travelix/onlylistlugar.html', {
             'titulo': 'Teste',
             'lista_data': lista_dato,
-            'nombre_ciudad':  nombre_ciudad.nombre_ciudad,
-            'activar':'lugar'
+            'nombre_ciudad': nombre_ciudad.nombre_ciudad,
+            'activar': 'lugar'
         })
     else:
-        return render(request,'travelix/listlugar.html',{
+        return render(request, 'travelix/listlugar.html', {
             'titulo': 'Atractivos en ' + nombre_ciudad.nombre_ciudad,
             'lista_data': lista_dato,
-            'nombre_ciudad':  nombre_ciudad.nombre_ciudad,
+            'nombre_ciudad': nombre_ciudad.nombre_ciudad,
             'activar': 'lugar'
         })
 
 
 def buscarDestinoVista(request):
-    #if request.GET.get('ciudad') is not None:
+    # if request.GET.get('ciudad') is not None:
     #    ciudad = request.GET.get('ciudad')
     #    lista_dato = Lugar.objects.filter(ciudad_lugar__id=ciudad)
     #    nombre_ciudad = Ciudad.objects.get(pk=ciudad)
-    #else:
+    # else:
     #    lista_dato = Lugar.objects.filter(ciudad_lugar__id=3)
     #    nombre_ciudad = Ciudad.objects.get(pk=3)
     nombre_destino = ''
-    #lista_dato = Lugar.objects.all()
+    # lista_dato = Lugar.objects.all()
     if request.GET.get('destino') is not None and request.GET.get('destino') is not '':
         destino = request.GET.get('destino')
         lista_dato = Lugar.objects.filter(tipo_destino_lugar=destino)
@@ -131,10 +201,10 @@ def buscarDestinoVista(request):
             'titulo': 'Teste',
             'lista_data': lista_dato,
             'nombre_ciudad': nombre_destino.destiny_type,
-            'activar':'destino'
+            'activar': 'destino'
         })
     else:
-        return render(request,'travelix/listlugar.html',{
+        return render(request, 'travelix/listlugar.html', {
             'titulo': 'Atractivos en ' + nombre_destino.destiny_type,
             'lista_data': lista_dato,
             'nombre_ciudad': nombre_destino.destiny_type,
@@ -142,14 +212,12 @@ def buscarDestinoVista(request):
         })
 
 
-
-
 def singleplaceinfo(request):
     lugar_a_buscar = request.GET.get('lugar')
     if lugar_a_buscar is not None and lugar_a_buscar is not '':
         lugar = Lugar.objects.get(pk=lugar_a_buscar)
         return render(request, 'travelix/single_listing.html', {
-            'lugar':lugar
+            'lugar': lugar
         })
 
 
@@ -161,46 +229,45 @@ def singleplacehotelinfo(request):
         rooms = Rooms.objects.filter(room_hotel=hotel)
         photo_hotel = PhotosHotel.objects.filter(hotel_ph=hotel)
         return render(request, 'travelix/single_listing_hotel.html', {
-            'lugar':lugar,
-            'hotel':hotel,
-            'rooms':rooms,
+            'lugar': lugar,
+            'hotel': hotel,
+            'rooms': rooms,
             'photo_hotel': photo_hotel,
 
         })
 
 
-
 def lugartipofiltro(request):
     lut = LugarTipo.objects.filter(active=True)
-    serializer = LugarTipoSerial(lut,many=False)
-    return JsonResponse(serializer.data,safe=False, status=200)
+    serializer = LugarTipoSerial(lut, many=False)
+    return JsonResponse(serializer.data, safe=False, status=200)
 
 
 def destinotipofiltro(request):
     lista = DestinoTipo.objects.filter(active=True)
-    serializer = DestinoTipoSerial(lista,many=False)
-    return JsonResponse(serializer.data,safe=False, status=200)
+    serializer = DestinoTipoSerial(lista, many=False)
+    return JsonResponse(serializer.data, safe=False, status=200)
 
 
 def actividadtipofiltro(request):
     lista = ActividadesTipo.objects.filter(active=True)
-    serializer = ActividadTipoSerial(lista,many=False)
-    return JsonResponse(serializer.data,safe=False, status=200)
+    serializer = ActividadTipoSerial(lista, many=False)
+    return JsonResponse(serializer.data, safe=False, status=200)
 
 
 def viajetipofiltro(request):
     lista = ViajeTipo.objects.filter(active=True)
-    serializer = ViajeTipoSerial(lista,many=False)
-    return JsonResponse(serializer.data,safe=False, status=200)
+    serializer = ViajeTipoSerial(lista, many=False)
+    return JsonResponse(serializer.data, safe=False, status=200)
 
 
 def ciudadfiltro(request):
     lista = Ciudad.objects.all()
-    serializer = CiudadFiltroSerial(lista,many=False)
-    return JsonResponse(serializer.data,safe=False, status=200)
+    serializer = CiudadFiltroSerial(lista, many=False)
+    return JsonResponse(serializer.data, safe=False, status=200)
 
 
 def lugarAll(request):
     lista = Lugar.objects.all()
-    serializer = LugarSerialAll(lista,many=True)
+    serializer = LugarSerialAll(lista, many=True)
     return JsonResponse(serializer.data, safe=False, status=200)

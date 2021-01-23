@@ -90,7 +90,7 @@ class Rooms(models.Model):
         return self.room_hotel.hotel_lugar.name_place + ' '+ self.room_name
 
     def get_room_services(self):
-        return "\n".join([p.service_name for p in self.room_services.all()])
+        return " - ".join([p.service_name for p in self.room_services.all()])
 
 
 class PhotosHotel(models.Model):
@@ -111,7 +111,7 @@ class PhotosHotel(models.Model):
 
 
 class ReservasHotel(models.Model):
-    rooms_selected = models.ManyToManyField(Rooms,related_name='room_selected_by_user')
+    rooms_selected = models.ForeignKey(Rooms,related_name='room_selected_by_user',on_delete=models.DO_NOTHING)
     fecha_reserva = models.DateField(verbose_name='Fecha Creacion Reserva')
     fecha_inicio_reservada = models.DateField(verbose_name='Fecha inicio Reserva')
     fecha_fin_reservada = models.DateField(verbose_name='Fecha fin Reserva')
@@ -123,8 +123,8 @@ class ReservasHotel(models.Model):
         verbose_name_plural = 'Reservas'
 
     def get_hotel(self):
-        return "\n".join([p.room_hotel.hotel_lugar.name_place for p in self.rooms_selected.all()])
+        return self.rooms_selected.room_hotel.hotel_lugar
 
     def __str__(self):
-        return str(self.fecha_reserva) + str(self.get_hotel)
+        return self.rooms_selected.room_hotel.hotel_lugar.name_place + ' '+ str(self.fecha_reserva)
 

@@ -28,7 +28,7 @@ urlpatterns = [
     path('deletetour/<int:pk>',delete_tour,name='deletetour'),
     path('singleplacetourinfo/',tour_info,name='singleplacetourinfo'),
 
-
+    path('listAvailableRooms/',listAvailableRoomsVista,name= 'listAvailableRooms'),
 
 
     #CustomTour

@@ -20,3 +20,5 @@ class HotelAdmin(admin.ModelAdmin):
 
 admin.site.register(Rooms)
 admin.site.register(Hotel,HotelAdmin)
+
+admin.site.register(ReservasHotel)
