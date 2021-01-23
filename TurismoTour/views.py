@@ -1,3 +1,5 @@
+from random import randint
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from TurismoPlace.models import ActividadesTipo, LugarTipo, ViajeTipo, Lugar
@@ -38,14 +40,20 @@ def delete_tour(request,pk):
         'lista_data': tours,
     })
 
+def _get_random_tour():
+    services = Tour.objects.filter(is_from_staff=True)
+    i = randint(0, services.count()-1)
+    return services[i]
 
 def list_tour_user(request):
     tours = Tour.objects.filter(user_id=request.user.id)
+    lista_data_staff = _get_random_tour()
     mensaje_vacio = False
     if len(tours) == 0:
         mensaje_vacio = True
     return render(request, 'travelix/itinerario/showUserTour.html', {
         'lista_data': tours,
+        'lista_data_staff': lista_data_staff,
         'mensaje_vacio': mensaje_vacio
     })
 

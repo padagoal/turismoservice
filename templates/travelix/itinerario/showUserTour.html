@@ -41,6 +41,7 @@
 
     <div class="intro">
         <div class="container-fluid">
+            {% if lista_data %}
             <div class="row">
                 <div class="col-lg-12">
                     <button class="button search_button"
@@ -50,6 +51,7 @@
                     </button>
                 </div>
             </div>
+            {% endif %}
             <br>
             <div class="row">
 
@@ -73,7 +75,6 @@
 
                                             {% if lista_data %}
                                                 {% for dato in lista_data %}
-
                                                     <div class="offers_item rating_4">
                                                         <div class="row">
                                                             <div class="col-lg-3 col-1680-4">
@@ -155,6 +156,61 @@
 
                                                     Crear Tour<span></span><span></span><span></span>
                                                 </button>
+
+                                                <h3>Estos son algunos tours que nosotros te recomendamos</h3>
+
+                                                {% for dato in lista_data_staff %}
+                                                    <div class="offers_item rating_4">
+                                                        <div class="row">
+                                                            <div class="col-lg-3 col-1680-4">
+                                                                <div class="offers_image_container">
+                                                                    <!-- Image by https://unsplash.com/@kensuarez -->
+                                                                    <div class="offers_image_background"
+                                                                         style="background-image:url(
+                                                                                 {{ '/media/' }}{{ dato.tour_photo_cover }})"></div>
+
+                                                                    <div class="offer_name">
+                                                                        <a href="#result"
+                                                                           onclick="showHotelPlace({{ dato.pk }})">
+                                                                            {{ dato.tour_name }}</a></div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <div class="offers_content">
+                                                                    <div class="offers_price">
+                                                                        {{ dato.tour_name }}
+                                                                    </div>
+
+                                                                    <p class="offers_text">
+                                                                        {{ dato.tour_short_descripcion }}
+                                                                    </p>
+                                                                    <div class="offers_icons">
+                                                                        <ul class="offers_icons_list">
+                                                                            <li class="offers_icons_item"><img
+                                                                                    src="{% static 'travelix/images/post.png' %}"
+                                                                                    alt=""></li>
+                                                                        </ul>
+                                                                    </div>
+
+                                                                    <div class="offer_reviews">
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-lg-1">
+
+                                                                <button class="button search_button"
+                                                                        onclick="window.location.href='{% url "singleplacetourinfo" dato.pk %}'">
+                                                                    Ver<span></span><span></span><span></span>
+                                                                </button>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                {% endfor %}
                                             {% endif %}
                                         </div>
                                     </div>
