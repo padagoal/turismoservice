@@ -57,7 +57,8 @@
                                         <!-- Lugar Grilla -->
 
                                         <div class="offers_grid">
-
+                                            <h2>Estos son tus tours </h2>
+                                        <br>
                                             {% if lista_data %}
                                                 {% for dato in lista_data %}
                                                     <div class="offers_item rating_4">
@@ -141,60 +142,62 @@
 
                                                     Crear Tour<span></span><span></span><span></span>
                                                 </button>
+                                            {% endif %}
 
-                                                <h3>Estos son algunos tours que nosotros te recomendamos</h3>
-                                                {% if data_staff %}
+                                            <h2>Estos son algunos tours que nosotros te recomendamos</h2>
+                                            <br>
+                                            {% if data_staff %}
 
-                                                        <div class="offers_item rating_4">
-                                                            <div class="row">
-                                                                <div class="col-lg-3 col-1680-4">
-                                                                    <div class="offers_image_container">
-                                                                        <!-- Image by https://unsplash.com/@kensuarez -->
-                                                                        <div class="offers_image_background"
-                                                                             style="background-image:url(
-                                                                                     {{ '/media/' }}{{ data_staff.tour_photo_cover }})"></div>
+                                                <div class="offers_item rating_4">
+                                                    <div class="row">
+                                                        <div class="col-lg-3 col-1680-4">
+                                                            <div class="offers_image_container">
+                                                                <!-- Image by https://unsplash.com/@kensuarez -->
+                                                                <div class="offers_image_background"
+                                                                     style="background-image:url(
+                                                                             {{ '/media/' }}{{ data_staff.tour_photo_cover }})"></div>
 
-                                                                        <div class="offer_name">
-                                                                            <a href="#result"
-                                                                               onclick="showHotelPlace({{ data_staff.pk }})">
-                                                                                {{ data_staff.tour_name }}</a></div>
+                                                                <div class="offer_name">
+                                                                    <a href="#result"
+                                                                       onclick="showHotelPlace({{ data_staff.pk }})">
+                                                                        {{ data_staff.tour_name }}</a></div>
 
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <div class="offers_content">
-                                                                        <div class="offers_price">
-                                                                            {{ data_staff.tour_name }}
-                                                                        </div>
-
-                                                                        <p class="offers_text">
-                                                                            {{ data_staff.tour_short_descripcion }}
-                                                                        </p>
-                                                                        <div class="offers_icons">
-                                                                            <ul class="offers_icons_list">
-                                                                                <li class="offers_icons_item"><img
-                                                                                        src="{% static 'travelix/images/post.png' %}"
-                                                                                        alt=""></li>
-                                                                            </ul>
-                                                                        </div>
-
-                                                                        <div class="offer_reviews">
-
-                                                                        </div>
-                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="offers_content">
+                                                                <div class="offers_price">
+                                                                    {{ data_staff.tour_name }}
                                                                 </div>
 
-                                                                <div class="col-lg-1">
-                                                                    <button class="button search_button"
-                                                                            onclick="window.location.href='{% url "singleplacetourinfo" data_staff.pk %}'">
-                                                                        Ver<span></span><span></span><span></span>
-                                                                    </button>
+                                                                <p class="offers_text">
+                                                                    {{ data_staff.tour_short_descripcion }}
+                                                                </p>
+                                                                <div class="offers_icons">
+                                                                    <ul class="offers_icons_list">
+                                                                        <li class="offers_icons_item"><img
+                                                                                src="{% static 'travelix/images/post.png' %}"
+                                                                                alt=""></li>
+                                                                    </ul>
+                                                                </div>
+
+                                                                <div class="offer_reviews">
+
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <br>
-                                                    {% endif %}
+
+                                                        <div class="col-lg-1">
+                                                            <button class="button search_button"
+                                                                    onclick="window.location.href='{% url "singleplacetourinfo" data_staff.pk %}'">
+                                                                Ver<span></span><span></span><span></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
                                             {% endif %}
+
                                         </div>
                                     </div>
                                 </div>

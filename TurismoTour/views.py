@@ -50,11 +50,11 @@ def _get_random_tour():
 def list_tour_user(request):
     tours = Tour.objects.filter(user_id=request.user.id)
     data_staff = _get_random_tour()
-    mensaje_vacio = True
+    mensaje_vacio = False
     if len(tours) > 0:
-        mensaje_vacio = False
+        mensaje_vacio = True
 
-    if mensaje_vacio:
+    if not mensaje_vacio:
         response = {
             'data_staff': data_staff,
             'mensaje_vacio': mensaje_vacio
@@ -62,7 +62,7 @@ def list_tour_user(request):
     else:
         response = {
             'lista_data': tours,
-            'lista_data_staff': data_staff,
+            'data_staff': data_staff,
             'mensaje_vacio': mensaje_vacio
         }
 
