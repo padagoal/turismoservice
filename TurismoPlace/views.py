@@ -135,7 +135,6 @@ def createReservation(request,pk):
 
     reserva.save()
 
-    send_mail.enviar_mail()
 
     return render(request, 'travelix/reserva/overview_reserva_hotel.html', {
         'reserva': reserva,
@@ -322,3 +321,20 @@ def lugarAll(request):
     lista = Lugar.objects.all()
     serializer = LugarSerialAll(lista, many=True)
     return JsonResponse(serializer.data, safe=False, status=200)
+
+
+def enviarMail(request):
+    reservapk = request.POST.get('reserva')
+    receptor = request.POST.get('receptor')
+
+    reserva = ReservasHotel.objects.get(pk=reservapk)
+
+    send_mail.enviar_mail_personalizado(reserva.rooms_selected.room_hotel.hotel_lugar.ciudad_lugar.nombre_ciudad,
+                                        reserva.rooms_selected.room_hotel.hotel_lugar.name_place,
+                                        reserva.rooms_selected.room_name,
+                                        reserva.fecha_inicio_reservada.strftime('%d/%m/%Y'),
+                                        reserva.fecha_fin_reservada.strftime('%d/%m/%Y'),
+                                        reserva.costo_reserva,
+                                        reserva.cantidad_personas_reserva,
+                                        receptor)
+    return None

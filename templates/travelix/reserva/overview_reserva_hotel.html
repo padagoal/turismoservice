@@ -14,7 +14,7 @@
 
                         <div class="info-reserva">
                             <ul class="list-group list-group-horizontal">
-                                <li class="list-group-item flex-fill"> <b>Ciudad</b> </li>
+                                <li class="list-group-item flex-fill"><b>Ciudad</b></li>
                                 <li class="list-group-item flex-fill">{{ reserva.rooms_selected.room_hotel.hotel_lugar.ciudad_lugar.nombre_ciudad }}</li>
                             </ul>
                             <ul class="list-group list-group-horizontal">
@@ -48,7 +48,56 @@
                 </div>
             </div>
         </div>
+        <div class="contact_form_section">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
 
+                        <!-- Contact Form -->
+                        <div class="contact_form_container">
+                            <div class="contact_title text-center">Enviar Resumen por Mail</div>
+
+
+                                <input type="text" id="contact_form_email" class="contact_form_email input_field"
+                                       placeholder="E-mail"  required="required" data-error="Email is required.">
+                                <button type="submit"  onclick="enviarMail()"
+                                        class="form_submit_button button trans_200">Enviar
+                                    <span></span><span></span><span></span></button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+<script>
+function enviarMail(){
+    var correo = $('#contact_form_email').val()
+    console.log(correo);
+    if(correo != null && correo !== ''){
+            $.ajax({
+                type: 'POST',
+                url: '{% url "enviarMail" %}',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'reserva':{{ reserva.pk }},
+                    'receptor': correo,
+                    'isAjax': 'S'
+                },
+                success: function (data) {
+                    $('#resultado_busqueda').html(data);
+                    $('#resultado_busqueda').focus();
+
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+    }else{
+        alert("Ingresar un Correo valido")
+    }
+}
+</script>
 
     {% endblock secciones_internas %}
 {% endblock cuerpo_main %}

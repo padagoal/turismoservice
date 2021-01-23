@@ -32,6 +32,8 @@ urlpatterns = [
 
     path('createReservation/<int:pk>',createReservation,name='createReservation'),
 
+    path('enviarMail/',enviarMail,name='enviarMail'),
+
 
     #CustomTour
     path('customtour/',customtour,name='customtour'),
