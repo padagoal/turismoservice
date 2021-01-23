@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, logout,login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from TurismoApp.models import Profile
+from TurismoTour.models import Tour
 # Create your views here.
 
 
@@ -12,7 +13,14 @@ def index(request):
     logueo_user = False
     if request.user.is_authenticated:
         logueo_user = True
-    return render(request,'travelix/main_detalle.html',{'logueo_user':logueo_user,'username':username})
+
+    listaTour = Tour.objects.filter(is_from_staff=True,tour_active=True)[:3]
+    response = {
+        'logueo_user':logueo_user,
+        'username':username,
+        'listaTour':listaTour
+        }
+    return render(request,'travelix/main_detalle.html',response)
 
 
 def history(request):

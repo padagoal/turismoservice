@@ -12,7 +12,7 @@
 
     <div class="user_box ml-auto">
         {% if logueo_user %}
-            <div class="user_box_login user_box_link"><a href="#">{{ 'Hola ' }}{{username}}</a> </div>
+            <div class="user_box_login user_box_link"><a href="#">{{ 'Hola ' }}{{ username }}</a></div>
             <div class="user_box_register user_box_link"><a href="{% url 'logout' %}">Cerrar</a></div>
         {% else %}
             <div class="user_box_login user_box_link"><a href="{% url 'login' %}">Ingresar</a></div>
@@ -372,98 +372,49 @@
                     <div class="row">
                         <div class="col-lg-10 offset-lg-1">
                             <div class="intro_text text-center">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu convallis tortor.
-                                    Suspendisse potenti. In faucibus massa arcu, vitae cursus mi hendrerit nec. </p>
+                                <p>Te invitamos a conocer los rincones mas lindos de nuestro país,
+                                    contamos con las mejores opciones para explorar e interiorizarte
+                                    aun más. Anímate a conocer y echale un vistazo a los circuitos
+                                    que tenemos preparados para vos. </p>
                             </div>
                         </div>
                     </div>
                     <div class="row intro_items">
 
                         <!-- Intro Item -->
+                        {% if listaTour %}
+                            {% for dato in listaTour %}
+                                <div class="col-lg-4 intro_col">
+                                    <div class="intro_item">
+                                        <div class="intro_item_overlay"></div>
 
-                        <div class="col-lg-4 intro_col">
-                            <div class="intro_item">
-                                <div class="intro_item_overlay"></div>
-                                <!-- Image by https://unsplash.com/@dnevozhai -->
-                                <div class="intro_item_background"
-                                     style="background-image:url({% static 'travelix/images/intro_1.jpg' %})"></div>
-                                <div class="intro_item_content d-flex flex-column align-items-center justify-content-center">
-                                    <div class="intro_date">May 25th - June 01st</div>
-                                    <div class="button intro_button">
-                                        <div class="button_bcg"></div>
-                                        <a href="{% url 'singleplacetourinfo' %}">
-                                            Ver mas</span><span></span><span></span></a></div>
-                                    <div class="intro_center text-center">
-                                        <h1>Mauritius</h1>
-                                        <div class="intro_price">From $1450</div>
-                                        <div class="rating rating_4">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+                                        <div class="intro_item_background"
+                                             style="background-image:url(
+                                                     {{ '/media/' }}{{ dato.tour_photo_cover }})"></div>
+                                        <div class="intro_item_content d-flex flex-column align-items-center justify-content-center">
+                                            <!--<div class="intro_date">May 25th - June 01st</div>-->
+                                            <div class="button intro_button">
+                                                <div class="button_bcg"></div>
+                                                <a href="{% url 'singleplacetourinfo' dato.pk %}">
+                                                    Ver mas</span><span></span><span></span></a></div>
+                                            <div class="intro_center text-center">
+                                                <h1>{{ dato.tour_name }}</h1>
+                                                <div class="intro_price">Desde {{ dato.tour_cost }}{{ ' Gs.' }}</div>
+                                                <div class="rating rating_5">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            {% endfor %}
 
-                        <!-- Intro Item -->
+                        {% endif %}
 
-                        <div class="col-lg-4 intro_col">
-                            <div class="intro_item">
-                                <div class="intro_item_overlay"></div>
-                                <!-- Image by https://unsplash.com/@hellolightbulb -->
-                                <div class="intro_item_background"
-                                     style="background-image:url({% static 'travelix/images/intro_2.jpg' %})"></div>
-                                <div class="intro_item_content d-flex flex-column align-items-center justify-content-center">
-                                    <div class="intro_date">May 25th - June 01st</div>
-                                    <div class="button intro_button">
-                                        <div class="button_bcg"></div>
-                                        <a href="#resultado_busqueda">see
-                                            more<span></span><span></span><span></span></a></div>
-                                    <div class="intro_center text-center">
-                                        <h1>Greece</h1>
-                                        <div class="intro_price">From $1450</div>
-                                        <div class="rating rating_4">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Intro Item -->
-
-                        <div class="col-lg-4 intro_col">
-                            <div class="intro_item">
-                                <div class="intro_item_overlay"></div>
-                                <!-- Image by https://unsplash.com/@willianjusten -->
-                                <div class="intro_item_background"
-                                     style="background-image:url({% static 'travelix/images/intro_3.jpg' %})"></div>
-                                <div class="intro_item_content d-flex flex-column align-items-center justify-content-center">
-                                    <div class="intro_date">May 25th - June 01st</div>
-                                    <div class="button intro_button">
-                                        <div class="button_bcg"></div>
-                                        <a href="#">see more<span></span><span></span><span></span></a></div>
-                                    <div class="intro_center text-center">
-                                        <h1>Scotland</h1>
-                                        <div class="intro_price">From $1450</div>
-                                        <div class="rating rating_4">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
                     </div>
                 </div>
