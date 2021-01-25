@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from TurismoApp.models import Profile
 from TurismoTour.models import Tour
+from TurismoBlog.models import Post
 # Create your views here.
 
 
@@ -15,10 +16,12 @@ def index(request):
         logueo_user = True
 
     listaTour = Tour.objects.filter(is_from_staff=True,tour_active=True)[:3]
+    listaPosteo = Post.objects.order_by('-id')[:6]
     response = {
         'logueo_user':logueo_user,
         'username':username,
-        'listaTour':listaTour
+        'listaTour':listaTour,
+        'listaPosteo':listaPosteo
         }
     return render(request,'travelix/main_detalle.html',response)
 
