@@ -36,6 +36,9 @@ class Tour(models.Model):
     def get_ciudades(self):
         return " - ".join([p.ciudad_lugar.nombre_ciudad for p in self.tour_lugar.all()])
 
+    def get_ciudades_salto(self):
+        return " \n ".join([p.ciudad_lugar.nombre_ciudad for p in self.tour_lugar.all()])
+
     def __str__(self):
         return self.tour_name
 
