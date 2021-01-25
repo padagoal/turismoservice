@@ -99,13 +99,19 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-lg-1">
-
-                                                                <button class="button search_button"
-                                                                        onclick="window.location.href='{% url "singleplacetourinfo" dato.pk %}'">
-                                                                    Ver<span></span><span></span><span></span>
-                                                                </button>
-                                                                <button class="button" style="
+                                                            <div class="col-lg-3">
+                                                                <div class="container-fluid">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-5">
+                                                                            <button class="button search_button"
+                                                                                    onclick="window.location.href='{% url "singleplacetourinfo" dato.pk %}'">
+                                                                                Ver
+                                                                                tour<span></span><span></span><span></span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="col-lg-2"></div>
+                                                                        <div class="col-lg-5">
+                                                                            <button class="button" style="
 
 	font-size: 13px;
 	font-weight: 700;
@@ -123,12 +129,15 @@
 	border: none;
 	outline: none;
 	cursor: pointer;
-	margin-top: 40px;
+	margin-top: 0;
 "
-                                                                        onclick="window.location.href='{% url "deletetour" dato.pk %}'">
-                                                                    Eliminar tour<span></span><span></span><span></span>
-                                                                </button>
-
+                                                                                    onclick="window.location.href='{% url "deletetour" dato.pk %}'">
+                                                                                Eliminar
+                                                                                tour<span></span><span></span><span></span>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
