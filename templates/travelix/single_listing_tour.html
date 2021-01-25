@@ -165,27 +165,27 @@
                                                 src="{% static 'travelix/images/compass.png' %}" alt=""></li>
                                         <li class="hotel_icons_item"><img
                                                 src="{% static 'travelix/images/bicycle.png' %}" alt=""></li>
-                                        <li class="hotel_icons_item"><img
-                                                src="{% static 'travelix/images/sailboat.png' %}" alt=""></li>
+                                        <!--<li class="hotel_icons_item"><img
+                                                src="{% static 'travelix/images/sailboat.png' %}" alt=""></li>-->
                                     </ul>
                                 </div>
 
                                 <div class="more_info">
                                     <div class="more_info_title">Informacion Adicional</div>
-
+                                     {% if tour.is_from_staff %}
                                     <p>
                                         {{ tour.tour_short_descripcion }}
                                     </p>
-                                    <div class="more_info_title">Horarios</div>
-                                    <p>
-                                        Desde {{ tour.tour_hour_begin }} hasta {{ tour.tour_hour_end }}
-                                    </p>
-                                    <div class="more_info_title">Costos</div>
-                                    <p>
-                                        {{ tour.tour_cost }} Gs. por Persona
-                                    </p>
-                                </div>
-                                <div class="more_info">
+
+                                        <div class="more_info_title">Horarios</div>
+                                        <p>
+                                            Desde {{ tour.tour_hour_begin }} hasta {{ tour.tour_hour_end }}
+                                        </p>
+                                        <div class="more_info_title">Costos</div>
+                                        <p>
+                                            {{ tour.tour_cost }} Gs. por Persona
+                                        </p>
+                                    {% endif %}
                                     <div class="more_info_title">Lugares a Visitar</div>
 
                                     <p>
@@ -197,12 +197,6 @@
                             </div>
 
                             <!-- Rooms -->
-
-                            <div class="rooms">
-
-                            </div>
-
-
                             <!-- Location on Map -->
 
                             <div class="location_on_map">
