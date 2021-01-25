@@ -71,6 +71,11 @@ urlpatterns = [
     path('listReservation/',list_reservas,name='listReservation'),
     path('deleteReservation/<int:pk>',delete_reserva,name='deleteReservation'),
 
+
+
+    #Bus
+    path('listBus/',listBuses,name='listBus'),
+
 ]
 
 #?ciudad=4&actividad=8#

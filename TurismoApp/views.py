@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from TurismoApp.models import Profile
 from TurismoTour.models import Tour
 from TurismoBlog.models import Post
+from TurismoBus.models import *
 # Create your views here.
 
 
@@ -17,11 +18,13 @@ def index(request):
 
     listaTour = Tour.objects.filter(is_from_staff=True,tour_active=True)[:3]
     listaPosteo = Post.objects.order_by('-id')[:6]
+    listBus = listBusesIndex()
     response = {
         'logueo_user':logueo_user,
         'username':username,
         'listaTour':listaTour,
-        'listaPosteo':listaPosteo
+        'listaPosteo':listaPosteo,
+        'listBus':listBus
         }
     return render(request,'travelix/main_detalle.html',response)
 
@@ -108,4 +111,17 @@ def logout_user(request):
     logout(request)
     return redirect('/')
 
+def listBusesIndex():
+    bus = Bus.objects.all().order_by('ciudad_partida_desc')[:10]
+    listBus = []
+    for data in bus:
+        busDto = BusDto()
+        busDto.ciudad_partida_desc = data.ciudad_partida_desc
+        busDto.ciudad_destino_desc = data.ciudad_destino_desc
+        busDto.ciudad_partida = Ciudad.objects.get(pk=data.ciudad_partida)
+        busDto.ciudad_destino = Ciudad.objects.get(pk=data.ciudad_destino)
+        busDto.precio = data.precio
+        busDto.ruta = data.ruta
+        listBus.append(busDto)
 
+    return listBus

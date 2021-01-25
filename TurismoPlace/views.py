@@ -13,6 +13,7 @@ from django.http import HttpResponse, JsonResponse
 from TurismoHotel.forms import ReservaHotelForm
 from TurismoTour.forms import TourReservaForm
 from TurismoTour.models import TourReserva,Tour
+from TurismoBus.models import Bus,BusDto
 from utils import send_mail
 
 # Create your views here.
@@ -427,4 +428,21 @@ def delete_reserva_tour(request,pk):
             return redirect(list_reservas)
         return redirect(list_reservas)
     return redirect(list_reservas)
+
+
+def listBuses(request):
+    bus = Bus.objects.all().order_by('ciudad_partida_desc')
+    listBus = []
+    for data in bus:
+        busDto = BusDto()
+        busDto.ciudad_partida_desc = data.ciudad_partida_desc
+        busDto.ciudad_destino_desc = data.ciudad_destino_desc
+        busDto.ciudad_partida = Ciudad.objects.get(pk=data.ciudad_partida)
+        busDto.ciudad_destino = Ciudad.objects.get(pk=data.ciudad_destino)
+        busDto.precio = data.precio
+        busDto.ruta = data.ruta
+        listBus.append(busDto)
+
+    return render(request,'travelix/bus/ListBuses.html',{'listBus':listBus})
+
 
