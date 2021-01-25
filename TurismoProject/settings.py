@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'TurismoHotel.apps.TurismohotelConfig',
     'TurismoTour.apps.TurismotourConfig',
     'TurismoBlog.apps.TurismoblogConfig',
+    'TurismoBus.apps.TurismobusConfig',
     'geoposition',
     'rest_framework',
     'sequences.apps.SequencesConfig',

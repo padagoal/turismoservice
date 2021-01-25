@@ -78,9 +78,8 @@
                 },
                 success: function (data) {
                     var obj = JSON.parse(data);
-                    var posteo = document.getElementById("likesPhoto-"+pk);
                     $('#likesPhoto-'+pk).html(obj[0].fields.likes+' likes');
-                    posteo.html(obj[0].fields.likes+' likes');
+
                 },
                 error: function (data) {
                     console.log(data);
