@@ -1,0 +1,155 @@
+{% extends 'travelix/main_detalle.html' %}
+{% load humanize %}
+{% block titulo %} Reserva Nro. {{ reserva.pk }}{% endblock titulo %}
+{% block cuerpo_main %}
+    {% block secciones_internas %}
+        <div class="intro">
+            <div class="container fill_height">
+                <div class="row fill_height" style=" margin-top: 10%;">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                        <div class="offers_grid" style="margin-top: 0">
+                            <div class="offers_item rating_4">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="rooms">
+                                            <div>
+                                                <div class="more_info_title">Resumen para Reservar Tour
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <!-- Tours -->
+                                            <form method="post"
+                                                  action="{% url 'createReservationTour' tour_elegido.pk %}">
+                                                {% csrf_token %}
+                                                <div class="room">
+
+                                                    <!-- Room -->
+                                                    <div class="row">
+                                                        <div class="col-lg-2">
+                                                            <div class="room_image">
+                                                                <img class="img-thumbnail" src="
+                                                                {{ '/media/' }}{{ tour_elegido.tour_photo_cover }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-7">
+                                                            <div class="room_content">
+                                                                <div class="room_title">Fecha de Reserva del Tour :
+
+                                                                    {{ tour_elegido.fecha_tour_reserva }}
+
+                                                                </div>
+                                                                <div class="room_title">{{ tour_elegido.tour_name }}</div>
+
+                                                                <br>
+                                                                <div class="room_title"><p> Cantidad de personas en
+                                                                    Reserva:
+                                                                     {{ reservaTour.tour_cost}}
+                                                                </p>
+                                                                </div>
+                                                                <div class="room_title">
+                                                                    <p>
+                                                                        Ciudades:
+                                                                        {{ tour_elegido.get_ciudades }}
+                                                                    </p>
+                                                                </div>
+                                                                <div class="room_price">Costo Total Gs:
+                                                                    {{ reservaTour.tour_cost }}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3"></div>
+                </div>
+            </div>
+        </div>
+        <div class="contact_form_section">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+
+                        <!-- Contact Form -->
+                        <div class="contact_form_container">
+                            <div class="contact_title text-center">Enviar Resumen por Mail</div>
+
+
+                            <input type="text" id="contact_form_email" class="contact_form_email input_field"
+                                   placeholder="E-mail" required="required" data-error="Email is required.">
+                            <button type="submit" onclick="enviarMail()"
+                                    class="form_submit_button button trans_200">Enviar
+                                <span></span><span></span><span></span></button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function enviarMail() {
+                var correo = $('#contact_form_email').val()
+                console.log(correo);
+                if (correo != null && correo !== '') {
+                    $.ajax({
+                        type: 'POST',
+                        url: '{% url "enviarMailTour" %}',
+                        data: {
+                            'csrfmiddlewaretoken': '{{ csrf_token }}',
+                            'reservapktour':{{ reservaTour.pk }},
+                            'receptor': correo,
+                            'isAjax': 'S'
+                        },
+                        success: function (data) {
+                            alert("Correo enviado ! Puede que tengas que verificar tu SPAM");
+
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        }
+                    });
+                } else {
+                    alert("Ingresar un Correo valido")
+                }
+            }
+
+            var costoTourSeleccionado = {{ tour_elegido.tour_cost }};
+
+            function calcularCosto() {
+                var costoField = $('#cantPersonas').val();
+                costoTotal = costoTourSeleccionado * costoField;
+                var costoT = $('#costoTotal');
+                costoT.html('<p>' + costoTotal + ' Gs.</p>')
+            }
+
+            $(function () {
+                var checkin = $('input[name="checkin"]');
+                checkin.daterangepicker({
+                    autoUpdateInput: false,
+                    singleDatePicker: true,
+                    locale: {
+                        cancelLabel: 'Clear'
+                    }
+                });
+
+                checkin.on('apply.daterangepicker', function (ev, picker) {
+                    $(this).val(picker.startDate.format('DD/MM/YYYY'));
+                });
+
+                checkin.on('cancel.daterangepicker', function (ev, picker) {
+                    $(this).val('');
+                });
+
+            });
+        </script>
+
+    {% endblock secciones_internas %}
+{% endblock cuerpo_main %}

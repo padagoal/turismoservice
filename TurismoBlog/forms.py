@@ -13,3 +13,9 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ('title_post','photo','descripcion_post',)
+
+
+class LikePostForm(forms.ModelForm):
+    class Meta:
+        model = LikesPerUser
+        fields = '__all__'

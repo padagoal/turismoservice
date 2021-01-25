@@ -1,0 +1,73 @@
+{% extends 'travelix/main.html' %}
+{% load static %}
+
+{% block titulo %}
+    {{ titulo }}
+{% endblock titulo %}
+{% block cabecera_extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/about_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'travelix/styles/about_responsive.css' %}">
+{% endblock cabecera_extra_css %}
+
+
+
+
+{% block cuerpo_main %}
+
+	<!-- Home -->
+
+	<div class="home">
+		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="{% static 'historia/historia_3.jpeg' %}"></div>
+		<div class="home_content">
+			<div class="home_title" style="top: 100px" >Metas y Objetivos</div>
+		</div>
+	</div>
+
+	<!-- Intro -->
+
+	<div class="intro">
+		<div class="container">
+			<div class="row" style="margin-bottom: 2em;">
+                <div class="col-lg-12">
+					<div class="intro_content">
+						<div class="intro_title">Metas</div>
+						<p class="intro_text" style="margin-top: 1px;">
+                            Llegar a todas las personas del Paraguay, que cada uno de los
+                            habitantes se sientan cómodos dentro del software desarrollado y utilizándolo,
+                            ser parte de la innovación contando con una página web y aplicación móvil, de fácil uso,
+                            interactivo y sencillo.
+                        </p>
+						<!--<div class="button intro_button"><div class="button_bcg"></div><a href="#">explore now<span></span><span></span><span></span></a></div>-->
+					</div>
+				</div>
+			</div>
+
+            <div class="row">
+				<div class="col-lg-12">
+					<div class="intro_content">
+						<div class="intro_title">Objetivos</div>
+						<p class="intro_text" style="margin-top: 1px;">Brindarle a cada persona  información real y
+                            actualizada de los lugares a visitar dentro del país, poder compartir
+                            las experiencias vividas subiendo fotos y admirar otras publicaciones de tus
+                            seguidores con un me gusta, así como la posibilidad de crear itinerarios
+                            o visualizar los predeterminados, el trabajo presentado tiene finalidad
+                            netamente de tesis, sin fines de lucro.
+
+                        </p>
+						<!--<div class="button intro_button"><div class="button_bcg"></div><a href="#">explore now<span></span><span></span><span></span></a></div>-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+{% block extra_js_end_body %}
+    <script src="{% static 'travelix/plugins/parallax-js-master/parallax.min.js'%}"></script>
+    <script src="{% static 'travelix/js/about_custom.js' %}"></script>
+{% endblock extra_js_end_body %}
+
+
+{% endblock cuerpo_main %}

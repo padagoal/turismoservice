@@ -85,8 +85,7 @@ function enviarMail(){
                     'isAjax': 'S'
                 },
                 success: function (data) {
-                    $('#resultado_busqueda').html(data);
-                    $('#resultado_busqueda').focus();
+                    alert("Correo enviado ! Puede que tengas que verificar tu SPAM");
 
                 },
                 error: function (data) {

@@ -7,3 +7,8 @@ class TourForm(forms.ModelForm):
         model = Tour
         fields = '__all__'
 
+
+class TourReservaForm(forms.ModelForm):
+    class Meta:
+        model = TourReserva
+        fields = '__all__'

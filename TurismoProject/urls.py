@@ -26,12 +26,15 @@ urlpatterns = [
     path('',views.index,name='home'),
     path('contact/',views.contact,name='contact'),
     path('history/',views.history,name='history'),
+    path('metas/',views.metas,name='metas'),
 
     path('login/',views.login_user,name='login'),
 
 
     path('dashboard/', views.dashboard),
     path('logout/',views.logout_user,name='logout'),
+    path('register/',views.register,name='register'),
+
     path('register/',views.register,name='register'),
 
     path('profile/',views.profile_user,name='profile'),

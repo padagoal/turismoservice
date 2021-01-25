@@ -27,6 +27,10 @@ def history(request):
     return render(request,'travelix/history.html',{'titulo': 'Historia'})
 
 
+def metas(request):
+    return render(request,'travelix/metas.html',{'titulo': 'Objetivos y Metas'})
+
+
 def contact(request):
     return render(request,'travelix/contact.html',{'titulo':'Contacto'})
 

@@ -29,11 +29,9 @@ urlpatterns = [
     path('deletetour/<int:pk>',delete_tour,name='deletetour'),
     path('singleplacetourinfo/',tour_info,name='singleplacetourinfo'),
 
-    path('listAvailableRooms/',listAvailableRoomsVista,name= 'listAvailableRooms'),
-
-    path('createReservation/<int:pk>',createReservation,name='createReservation'),
 
     path('enviarMail/',enviarMail,name='enviarMail'),
+    path('enviarMailTour/',enviarMailTour,name='enviarMailTour'),
 
 
     #CustomTour
@@ -48,6 +46,10 @@ urlpatterns = [
     path('saveTourFromUser/',saveTourFromUser,name='saveTourFromUser'),
 
 
+    path('previewTour/<int:pk>',previewReservaItinerario,name='previewTour'),
+    path('overviewReservaItinerario/<int:pk>',overviewReservaItinerario,name='overviewReservaItinerario'),
+    path('createReservationTour/<int:pk>',createReservaItinerario,name='createReservationTour'),
+    path('deleteReservationTour/<int:pk>',delete_reserva_tour,name='deleteReservationTour'),
 
 
 
@@ -57,7 +59,16 @@ urlpatterns = [
     path('blog/newPost/',post_new,name='newPost'),
     path('blog/login/',login_user_blog,name='blogLogin'),
     path('blog/logout/',logout_user_blog,name='blogLogout'),
-    path('blog/PostUser',post_user,name='postUser')
+    path('blog/PostUser',post_user,name='postUser'),
+    path('blog/registerBlog/',register_blog,name='registerBlog'),
+    path('blog/likePost/',likePost,name='likePost'),
+
+
+    #Reservas
+    path('listAvailableRooms/',listAvailableRoomsVista,name= 'listAvailableRooms'),
+    path('createReservation/<int:pk>',createReservation,name='createReservation'),
+    path('listReservation/',list_reservas,name='listReservation'),
+    path('deleteReservation/<int:pk>',delete_reserva,name='deleteReservation'),
 
 ]
 

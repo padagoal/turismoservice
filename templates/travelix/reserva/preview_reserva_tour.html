@@ -1,0 +1,144 @@
+{% extends 'travelix/main_detalle.html' %}
+{% load humanize %}
+{% block titulo %} Reserva Nro. {{ reserva.pk }}{% endblock titulo %}
+{% block cuerpo_main %}
+    {% block secciones_internas %}
+        <div class="intro">
+            <div class="container fill_height">
+                <div class="row fill_height" style=" margin-top: 10%;">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                        <div class="offers_grid" style="margin-top: 0">
+                            <div class="offers_item rating_4">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="rooms">
+                                            <div>
+                                                <div class="more_info_title">Resumen para Reservar Tour
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <!-- Tours -->
+                                            <form method="post" action="{% url 'createReservationTour' tour_elegido.pk %}">
+                                                {% csrf_token %}
+                                                <div class="room">
+
+                                                    <!-- Room -->
+                                                    <div class="row">
+                                                        <div class="col-lg-2">
+                                                            <div class="room_image">
+                                                                <img class="img-thumbnail" src="
+                                                                {{ '/media/' }}{{ tour_elegido.tour_photo_cover }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-7">
+                                                            <div class="room_content">
+                                                                <div class="room_title">Fecha de Reserva del Tour :
+
+                                                                    <input type="text" name="checkin"
+                                                                           class="check_in"
+                                                                           placeholder="DD-MM-YYYY" required>
+
+                                                                </div>
+                                                                <div class="room_title">{{ tour_elegido.tour_name }}</div>
+                                                                <div class="room_price">
+                                                                    Costo: {{ tour_elegido.tour_cost }}
+                                                                    Gs. por Persona
+                                                                </div>
+
+                                                                <br>
+                                                                <div class="room_title"><p> Cantidad de personas en
+                                                                    Reserva:
+                                                                    <input type="number" id="cantPersonas" min="1"
+                                                                           name="cantPersonas"
+                                                                           max="10"
+                                                                           onkeyup="calcularCosto()"
+                                                                           onchange="calcularCosto()">
+                                                                </p>
+                                                                </div>
+                                                                <div class="room_title">
+                                                                    <p>
+                                                                        Ciudades:
+                                                                        {{ tour_elegido.get_ciudades }}
+                                                                    </p>
+                                                                </div>
+                                                                <div class="room_price">Costo Total Gs:
+                                                                    <div id="costoTotal">
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3 text-lg-right">
+                                                                <div class="room_button">
+                                                                    <button class="button" style="
+
+	font-size: 13px;
+	font-weight: 700;
+	color: #fff;
+	text-transform: uppercase;
+	line-height: 53px;
+	padding-left: 46px;
+	padding-right: 46px;
+	background: #b52929;
+	-webkit-transform: translateY(15px);
+	-moz-transform: translateY(15px);
+	-ms-transform: translateY(15px);
+	-o-transform: translateY(15px);
+	transform: translateY(15px);
+	border: none;
+	outline: none;
+	cursor: pointer;
+	margin-top: 40px;
+">Reservar
+                                                                        <span></span><span></span><span></span></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3"></div>
+                </div>
+            </div>
+        </div>
+        <script>
+
+            var costoTourSeleccionado = {{ tour_elegido.tour_cost }};
+
+            function calcularCosto() {
+                var costoField = $('#cantPersonas').val();
+                costoTotal = costoTourSeleccionado * costoField;
+                var costoT = $('#costoTotal');
+                costoT.html('<p>' + costoTotal + ' Gs.</p>')
+            }
+
+            $(function () {
+                var checkin = $('input[name="checkin"]');
+                checkin.daterangepicker({
+                    autoUpdateInput: false,
+                    singleDatePicker: true,
+                    locale: {
+                        cancelLabel: 'Clear'
+                    }
+                });
+
+                checkin.on('apply.daterangepicker', function (ev, picker) {
+                    $(this).val(picker.startDate.format('DD/MM/YYYY'));
+                });
+
+                checkin.on('cancel.daterangepicker', function (ev, picker) {
+                    $(this).val('');
+                });
+
+            });
+        </script>
+
+    {% endblock secciones_internas %}
+{% endblock cuerpo_main %}

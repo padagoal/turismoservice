@@ -1,0 +1,47 @@
+{% extends 'blog/index.html' %}
+{% load static %}
+{% block index_interno %}
+    <div id="colorlib-main">
+        <section class="ftco-section ftco-no-pt ftco-no-pb">
+            <div class="container px-0">
+                <div class="row no-gutters block-9 fill_height">
+                    <div class="col-lg-6 order-md-last">
+                        <form method="post" class="bg-primary p-5 contact-form">
+                            {% csrf_token %}
+                            <center>
+                                <div class="form-group">
+                                    <img class="img-responsive" width="70%"
+                                         src="{% static 'travelix/images/logo-cti.png' %}" alt="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" name="email" placeholder="Correo Electronico">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="username" placeholder="Usuario">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" name="pass" placeholder="Contraseña">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-white py-3 px-5">Registrarme</button>
+                                </div>
+
+                                <span class="form-group">
+							    Ya eres miembro?
+						        </span>
+                                <br>
+                                <br>
+                                <span class="form-group btn btn-white py-3 px-5">
+                                    <a href="{% url 'blogLogin' %}" class="">
+                                        <span class="form-group">Ingresar</span>
+                                    </a>
+                                </span>
+                            </center>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

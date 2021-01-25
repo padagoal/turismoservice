@@ -3,6 +3,7 @@ from sendgrid import SendGridAPIClient, sendgrid
 from sendgrid.helpers.mail import Mail
 
 API_KEY = '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'
+sg = sendgrid.SendGridAPIClient(API_KEY)
 
 
 def enviar_mail():
@@ -22,8 +23,7 @@ def enviar_mail():
         print(e)
 
 
-def enviar_mail_personalizado(ciudad,hotel,habitacion,checkin,checkout,costo,personas, receptor):
-    sg = sendgrid.SendGridAPIClient(API_KEY)
+def enviar_mail_personalizado_hotel(ciudad,hotel,habitacion,checkin,checkout,costo,personas, receptor):
     data = {
         "from": {
             "email": "tesis_lau_majo@hotmail.com"
@@ -49,14 +49,54 @@ def enviar_mail_personalizado(ciudad,hotel,habitacion,checkin,checkout,costo,per
         ],
         "template_id": "d-0e86a7b2c25544d995416ff97e776168"
     }
-    print(data)
+
     try:
         response = sg.client.mail.send.post(request_body=data)
         print(response.status_code)
         print(response.body)
         print(response.headers)
+        return 'OK'
     except Exception as e:
         print(e)
+        return 'NO'
+
+
+def enviar_mail_personalizado_tour(reservaTour, receptor):
+    data = {
+        "from": {
+            "email": "tesis_lau_majo@hotmail.com"
+        },
+        "personalizations": [
+            {
+                "to": [
+                    {
+                        "email": receptor
+                    }
+                ],
+                "dynamic_template_data": {
+                    "tour": reservaTour.tour_selected.tour_name,
+                    "fecha": reservaTour.fecha_tour_reserva.strftime('%d/%m/%Y'),
+                    "ciudades": reservaTour.tour_selected.get_ciudades(),
+                    "lugar": reservaTour.tour_selected.get_places_names(),
+                    "costo": reservaTour.tour_cost,
+                    "personas": reservaTour.cantidad_personas_tour,
+
+                }
+            }
+        ],
+        "template_id": "d-b8c48877c22d4bd99dc7c22b3e7624b3"
+    }
+
+    try:
+        print(data)
+        response = sg.client.mail.send.post(request_body=data)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+        return response
+    except Exception as e:
+        print(e)
+        return 'NO'
 
 
 

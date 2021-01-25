@@ -56,10 +56,18 @@
                                         <div class="hotel_location">{{ tour.tour_short_descripcion }} </div>
                                     </div>
                                     <div class="hotel_title_button ml-lg-auto text-lg-right">
-                                        <div class="button book_button trans_200"><a
-                                                href="#">book<span></span><span></span><span></span></a></div>
+                                        {% if tour.is_from_staff %}
+
+
+                                                <button class="button search_button"
+                                                        onclick="window.location.href='{% url "previewTour" tour.pk %}'">
+                                                    Reservar<span></span><span></span><span></span>
+                                                </button>
+
+
+                                        {% endif %}
                                         <div class="hotel_map_link_container">
-                                            <a class="hotel_map_link" href="#map" >Ver ubicacion en el mapa</a>
+                                            <a class="hotel_map_link" href="#map">Ver ubicacion en el mapa</a>
                                         </div>
                                     </div>
                                 </div>

@@ -9,7 +9,7 @@
                     {% if posts %}
                         {% for post in posts %}
                             <!-- Segunda Fila -->
-                            <div class="col-md-4 d-flex">
+                            <div class="col-md-4 d-flex" onclick="likePhoto({{ post.pk }})">
                                 <div class="blog-entry ftco-animate">
                                     <a href="#" class="img"
                                        style="background-image: url('{{ '/media/' }}{{ post.photo }}');"></a>
@@ -20,7 +20,12 @@
                                                 <span><i class="icon-calendar mr-2"></i>{{ post.created_date }}</span>
                                                 <span><a href="#"><i
                                                         class="icon-folder-o mr-2"></i>Viajes</a></span>
-                                                <span><i class="icon-heart mr-2"></i>{{ post.likes }} likes</span>
+                                                <span>
+                                                    <i class="icon-heart mr-2"></i>
+                                                    <span id="likesPhoto">
+                                                        {{ post.likes }} likes
+                                                    </span>
+                                                </span>
                                             </p>
                                         </div>
                                         <p class="mb-4">{{ post.descripcion_post }}️</p>
@@ -58,3 +63,29 @@
         </section>
     </div>
 {% endblock index_interno %}
+{% block extra_js %}
+    <script>
+        function likePhoto(pk) {
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "likePost" %}',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'postliked': pk,
+                    'isAjax': 'S'
+
+                },
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $('#likesPhoto').html(obj[0].fields.likes+' likes');
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+
+
+            });
+        }
+    </script>
+{% endblock %}
