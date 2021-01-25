@@ -22,7 +22,7 @@
                                                         class="icon-folder-o mr-2"></i>Viajes</a></span>
                                                 <span>
                                                     <i class="icon-heart mr-2"></i>
-                                                    <span id="likesPhoto">
+                                                    <span id="likesPhoto-{{ pk }}">
                                                         {{ post.likes }} likes
                                                     </span>
                                                 </span>
@@ -78,7 +78,8 @@
                 },
                 success: function (data) {
                     var obj = JSON.parse(data);
-                    $('#likesPhoto').html(obj[0].fields.likes+' likes');
+                    var posteo = document.getElementById("likesPhoto-"+pk);
+                    posteo.html(obj[0].fields.likes+' likes');
                 },
                 error: function (data) {
                     console.log(data);
