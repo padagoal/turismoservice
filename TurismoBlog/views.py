@@ -106,4 +106,8 @@ def likePost(request):
     return JsonResponse(serializers.serialize('json',Post.objects.filter(pk=post)),safe=False,status=200)
 
 
-
+@login_required(login_url='blog/login/')
+def delete_post(request,pk):
+    post = Post.objects.get(pk=pk)
+    post.delete()
+    return redirect(post_user)

@@ -62,6 +62,7 @@ urlpatterns = [
     path('blog/PostUser',post_user,name='postUser'),
     path('blog/registerBlog/',register_blog,name='registerBlog'),
     path('blog/likePost/',likePost,name='likePost'),
+    path('blog/deletepost/<int:pk>',delete_post,name='deletepost'),
 
 
     #Reservas

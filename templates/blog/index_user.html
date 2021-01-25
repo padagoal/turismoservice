@@ -27,6 +27,12 @@
                                         <p>
                                         </p>
                                     </div>
+                                    <div id="delete">
+                                        <a href="{% url 'deletepost' post.pk %}" class="btn btn-danger">
+                                            Borrar Post
+                                        </a>
+
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}

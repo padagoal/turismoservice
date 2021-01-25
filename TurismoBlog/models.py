@@ -25,7 +25,7 @@ class Post(models.Model):
 
 
 class LikesPerUser(models.Model):
-    post_liked = models.ForeignKey(Post,on_delete=models.DO_NOTHING,related_name='post_liked_by_user')
+    post_liked = models.ForeignKey(Post,on_delete=models.SET_NULL,related_name='post_liked_by_user',null=True)
     user = models.IntegerField(default=0,verbose_name='User')
 
     def __str__(self):
