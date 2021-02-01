@@ -482,37 +482,38 @@
             <div class="buses">
                 <div class="contact">
                     <div class="container">
-                    <h2>Informacion sobre Buses</h2>
+                        <h2>Informacion sobre Buses</h2>
                         <div class="row">
                             <div class="col-lg-12">
-                                 <table class="table table-striped">
-                                <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">Ciudad Partida</th>
-                                    <th scope="col">Descripcion</th>
-                                    <th scope="col">Ciudad Destino</th>
-                                    <th scope="col">Descripcion</th>
-                                    <th scope="col">Ruta</th>
-                                    <th scope="col">Precio</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for data in listBus %}
+                                <table class="table table-striped">
+                                    <thead class="thead-dark">
                                     <tr>
-                                        <th scope="row">{{ data.ciudad_partida.nombre_ciudad }}</th>
-                                        <td>{{ data.ciudad_partida_desc }}</td>
-                                        <td>{{ data.ciudad_destino.nombre_ciudad }}</td>
-                                        <td>{{ data.ciudad_destino_desc }}</td>
-                                        <td>{{ data.ruta }}</td>
-                                        <td>{{ data.precio }}Gs.</td>
+                                        <th scope="col">Ciudad Partida</th>
+                                        <th scope="col">Descripcion</th>
+                                        <th scope="col">Ciudad Destino</th>
+                                        <th scope="col">Descripcion</th>
+                                        <th scope="col">Ruta</th>
+                                        <th scope="col">Precio</th>
                                     </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    {% for data in listBus %}
+                                        <tr>
+                                            <th scope="row">{{ data.ciudad_partida.nombre_ciudad }}</th>
+                                            <td>{{ data.ciudad_partida_desc }}</td>
+                                            <td>{{ data.ciudad_destino.nombre_ciudad }}</td>
+                                            <td>{{ data.ciudad_destino_desc }}</td>
+                                            <td>{{ data.ruta }}</td>
+                                            <td>{{ data.precio }}Gs.</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
                             <center>
                                 <button class="button search_button"
-                                        onclick="window.location.href={% url 'listBus' %}">Ver mas<span></span><span></span><span></span>
+                                        onclick="window.location.href={% url 'listBus' %}">Ver
+                                    mas<span></span><span></span><span></span>
                                 </button>
                             </center>
                         </div>
@@ -533,8 +534,8 @@
                         </div>
                         <div class="col-lg-7">
                             <div class="contact_form_container">
-                                <div class="contact_title">Contactanos</div>
-                                <form action="#" id="contact_form" class="contact_form">
+                                <div class="contact_title text-center">Ponte en Contacto!</div>
+                                <div id="contact_form" class="contact_form text-center">
                                     <input type="text" id="contact_form_name" class="contact_form_name input_field"
                                            placeholder="Nombre" required="required" data-error="Name is required.">
                                     <input type="text" id="contact_form_email" class="contact_form_email input_field"
@@ -544,15 +545,17 @@
                                            required="required" data-error="Subject is required.">
                                     <textarea id="contact_form_message" class="text_field contact_form_message"
                                               name="message" rows="4" placeholder="Mensaje" required="required"
-                                              data-error="Please, write us a message."></textarea>
-                                    <button type="button" id="form_submit_button" class="form_submit_button button">
+                                              data-error="Escribir un mensaje"></textarea>
+                                    <button id="form_submit_button" class="form_submit_button button trans_200"
+                                            onclick="enviarMailContacto();">
                                         Enviar Mensaje<span></span><span></span><span></span></button>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     {% endblock secciones_internas %}
 
@@ -561,6 +564,43 @@
 
     {% block extra_detalle_js %}
     {% endblock extra_detalle_js %}
+
+     <script>
+    function enviarMailContacto() {
+                var nombreContacto = $('#contact_form_name');
+                var mailContacto = $('#contact_form_email');
+                var motivoContacto = $('#contact_form_subject');
+                var mensajeContacto = $('#contact_form_message');
+
+                if (mailContacto != null && mailContacto !== '') {
+                    $.ajax({
+                        type: 'POST',
+                        url: '{% url "enviarMailContacto" %}',
+                        data: {
+                            'csrfmiddlewaretoken': '{{ csrf_token }}',
+                            'nombreContacto':nombreContacto.val(),
+                            'mailContacto':mailContacto.val(),
+                            'motivoContacto':motivoContacto.val(),
+                            'mensajeContacto':mensajeContacto.val(),
+                            'isAjax': 'S'
+                        },
+                        success: function (data) {
+                            alert("Correo enviado !");
+                            nombreContacto.val("");
+                            mailContacto.val("");
+                            motivoContacto.val("");
+                            mensajeContacto.val("");
+
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        }
+                    });
+                } else {
+                    alert("Ingresar un Correo valido")
+                }
+            }
+    </script>
 
     <script>
 

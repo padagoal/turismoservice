@@ -72,7 +72,7 @@
         </div>
 <script>
 function enviarMail(){
-    var correo = $('#contact_form_email').val()
+    var correo = $('#contact_form_email');
     console.log(correo);
     if(correo != null && correo !== ''){
             $.ajax({
@@ -81,12 +81,12 @@ function enviarMail(){
                 data: {
                     'csrfmiddlewaretoken': '{{ csrf_token }}',
                     'reserva':{{ reserva.pk }},
-                    'receptor': correo,
+                    'receptor': correo.val(),
                     'isAjax': 'S'
                 },
                 success: function (data) {
                     alert("Correo enviado ! Puede que tengas que verificar tu SPAM");
-
+                    correo.val("");
                 },
                 error: function (data) {
                     console.log(data);

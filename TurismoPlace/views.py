@@ -228,7 +228,8 @@ def enviarMail(request):
                                         reserva.costo_reserva,
                                         reserva.cantidad_personas_reserva,
                                         receptor)
-    return respuesta
+    if respuesta != 'NO':
+        return HttpResponse(status=200)
 
 
 def enviarMailTour(request):
@@ -237,7 +238,24 @@ def enviarMailTour(request):
 
     reserva = TourReserva.objects.get(pk=reservapktour)
     respuesta = send_mail.enviar_mail_personalizado_tour(reserva,receptor)
-    return respuesta
+    if respuesta != 'NO':
+        return HttpResponse(status=200)
+
+
+def enviarMailContacto(request):
+
+    nombreContacto = request.POST.get('nombreContacto')
+
+    mailContacto = request.POST.get('mailContacto')
+
+    motivoContacto = request.POST.get('motivoContacto')
+
+    mensajeContacto = request.POST.get('mensajeContacto')
+
+    respuesta = send_mail.enviar_mail_contacto(nombreContacto,motivoContacto,mailContacto,mensajeContacto)
+
+    if respuesta != 'NO':
+        return HttpResponse(status=200)
 
 
 def listAvailableRoomsVista(request):

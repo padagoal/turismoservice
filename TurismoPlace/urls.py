@@ -32,6 +32,7 @@ urlpatterns = [
 
     path('enviarMail/',enviarMail,name='enviarMail'),
     path('enviarMailTour/',enviarMailTour,name='enviarMailTour'),
+    path('enviarMailContacto/',enviarMailContacto,name='enviarMailContacto'),
 
 
     #CustomTour

@@ -35,6 +35,28 @@
     {% block cabecera_main_nav %}
         <header class="header">
 
+            <!-- Turismo COVID-19 -->
+            <div id="turismo-covid">
+                <div class="top_bar" style="height: 40px;background: #ec6f14;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col flex-row">
+                                <center>
+                                    <h3 style="color: white;
+                                    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">TURISMO-COVID-19
+                                        <button class="btn btn-info"
+                                                onclick="window.location.href='https://www.senatur.gov.py/turismo/covid-19/'"
+                                                style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">
+                                            Click Aqui >>>
+                                        </button>
+                                    </h3>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Top Bar -->
 
             <div class="top_bar">
@@ -141,7 +163,9 @@
                             <div class="footer_content footer_about">
                                 <div class="logo_container footer_logo">
                                     <div class="logo">
-                                        <a href="{% url 'home' %}"><img src="{% static 'travelix/images/logo-cti.png' %}" alt="">Comunidad de Turismo Interno del Paraguay</a>
+                                        <a href="{% url 'home' %}"><img
+                                                src="{% static 'travelix/images/logo-cti.png' %}" alt="">Comunidad de
+                                            Turismo Interno del Paraguay</a>
                                     </div>
                                 </div>
                                 <p class="footer_about_text"></p>
@@ -176,7 +200,7 @@
                                                     src="{% static 'travelix/images/phone-call.svg' %}" alt=""></div>
                                         </div>
                                         <div class="contact_info_text">+595 983 442268 - +595 981 572040
-                                         </div>
+                                        </div>
                                     </li>
                                     <li class="contact_info_item d-flex flex-row">
                                         <div>

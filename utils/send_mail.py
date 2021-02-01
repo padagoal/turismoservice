@@ -52,9 +52,6 @@ def enviar_mail_personalizado_hotel(ciudad,hotel,habitacion,checkin,checkout,cos
 
     try:
         response = sg.client.mail.send.post(request_body=data)
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
         return 'OK'
     except Exception as e:
         print(e)
@@ -88,16 +85,41 @@ def enviar_mail_personalizado_tour(reservaTour, receptor):
     }
 
     try:
-        print(data)
+
         response = sg.client.mail.send.post(request_body=data)
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
         return response
     except Exception as e:
         print(e)
         return 'NO'
 
 
+def enviar_mail_contacto(nombre,asunto,correo,mensaje):
+    data = {
+        "from": {
+            "email": "tesis_lau_majo@hotmail.com"
+        },
+        "personalizations": [
+            {
+                "to": [
+                    {
+                        "email": "padagoal012@gmail.com"
+                    }
+                ],
+                "dynamic_template_data": {
+                    "nombre": nombre,
+                    "asunto": asunto,
+                    "correo": correo,
+                    "mensaje": mensaje,
+                }
+            }
+        ],
+        "template_id": "d-5d06edfacd934e7792551a5b824d00cd"
+    }
 
+    try:
 
+        response = sg.client.mail.send.post(request_body=data)
+        return response
+    except Exception as e:
+        print(e)
+        return 'NO'
