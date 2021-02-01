@@ -102,7 +102,7 @@ def enviar_mail_contacto(nombre,asunto,correo,mensaje):
             {
                 "to": [
                     {
-                        "email": "padagoal012@gmail.com"
+                        "email": "tesis_lau_majo@hotmail.com"
                     }
                 ],
                 "dynamic_template_data": {
