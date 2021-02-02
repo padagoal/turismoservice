@@ -5,7 +5,7 @@ from .models import *
 class PostForm(forms.ModelForm):
     title_post = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
                                              label='Titulo del Post')
-    photo = forms.ImageField()
+    photo = forms.ImageField(error_messages = {'invalid':_("Image files only")}, widget=forms.FileInput)
 
     descripcion_post = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
                                  label='Descripcion del Post')
